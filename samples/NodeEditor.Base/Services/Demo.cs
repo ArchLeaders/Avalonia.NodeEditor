@@ -1,6 +1,6 @@
-using System.Collections.ObjectModel;
 using NodeEditor.Model;
 using NodeEditor.Mvvm;
+using System.Collections.ObjectModel;
 
 namespace NodeEditorDemo.Services;
 
@@ -8,8 +8,7 @@ internal static class Demo
 {
     public static IDrawingNode CreateDemoDrawing()
     {
-        var drawing = new DrawingNodeViewModel
-        {
+        var drawing = new DrawingNodeViewModel {
             X = 0,
             Y = 0,
             Width = 900,
@@ -33,8 +32,7 @@ internal static class Demo
         rectangle1.Parent = drawing;
         drawing.Nodes.Add(rectangle1);
 
-        if (rectangle0.Pins?[1] is { } && rectangle1.Pins?[0] is { })
-        {
+        if (rectangle0.Pins?[1] is { } && rectangle1.Pins?[0] is { }) {
             var connector0 = NodeFactory.CreateConnector(rectangle0.Pins[1], rectangle1.Pins[0]);
             connector0.Parent = drawing;
             drawing.Connectors.Add(connector0);
@@ -51,7 +49,7 @@ internal static class Demo
         var signal0 = NodeFactory.CreateSignal(x: 30, y: 270, label: "in0", state: true);
         signal0.Parent = drawing;
         drawing.Nodes.Add(signal0);
-  
+
         var signal1 = NodeFactory.CreateSignal(x: 30, y: 390, label: "in1", state: false);
         signal1.Parent = drawing;
         drawing.Nodes.Add(signal1);
@@ -64,22 +62,19 @@ internal static class Demo
         orGate0.Parent = drawing;
         drawing.Nodes.Add(orGate0);
 
-        if (signal0.Pins?[1] is { } && orGate0.Pins?[2] is { })
-        {
+        if (signal0.Pins?[1] is { } && orGate0.Pins?[2] is { }) {
             var connector0 = NodeFactory.CreateConnector(signal0.Pins[1], orGate0.Pins[2]);
             connector0.Parent = drawing;
             drawing.Connectors.Add(connector0);
         }
 
-        if (signal1.Pins?[1] is { } && orGate0.Pins?[0] is { })
-        {
+        if (signal1.Pins?[1] is { } && orGate0.Pins?[0] is { }) {
             var connector0 = NodeFactory.CreateConnector(signal1.Pins[1], orGate0.Pins[0]);
             connector0.Parent = drawing;
             drawing.Connectors.Add(connector0);
         }
 
-        if (orGate0.Pins?[1] is { } && signal2.Pins?[0] is { })
-        {
+        if (orGate0.Pins?[1] is { } && signal2.Pins?[0] is { }) {
             var connector1 = NodeFactory.CreateConnector(orGate0.Pins[1], signal2.Pins[0]);
             connector1.Parent = drawing;
             drawing.Connectors.Add(connector1);

@@ -6,7 +6,7 @@ namespace NodeEditorDemo.Views;
 
 public partial class MainView : UserControl
 {
-    public static readonly StyledProperty<NodeZoomBorder?> ZoomControlProperty = 
+    public static readonly StyledProperty<NodeZoomBorder?> ZoomControlProperty =
         AvaloniaProperty.Register<MenuView, NodeZoomBorder?>(nameof(MainView));
 
     public MainView()
@@ -14,8 +14,7 @@ public partial class MainView : UserControl
         InitializeComponent();
     }
 
-    public NodeZoomBorder? ZoomControl
-    {
+    public NodeZoomBorder? ZoomControl {
         get => GetValue(ZoomControlProperty);
         set => SetValue(ZoomControlProperty, value);
     }

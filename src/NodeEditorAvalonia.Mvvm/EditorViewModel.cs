@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 using NodeEditor.Model;
+using System.Collections.Generic;
 
 namespace NodeEditor.Mvvm;
 

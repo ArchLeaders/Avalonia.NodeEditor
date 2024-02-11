@@ -29,9 +29,9 @@ public interface IDrawingNode : INode
     void NotifySelectionChanged();
     void NotifyDeselectedNodes();
     void NotifyDeselectedConnectors();
-    void  SetSelectedNodes(ISet<INode>? nodes);
+    void SetSelectedNodes(ISet<INode>? nodes);
     ISet<IConnector>? GetSelectedConnectors();
-    void  SetSelectedConnectors(ISet<IConnector>? connectors);
+    void SetSelectedConnectors(ISet<IConnector>? connectors);
     INodeSerializer? GetSerializer();
     void SetSerializer(INodeSerializer? serializer);
     public T? Clone<T>(T source);

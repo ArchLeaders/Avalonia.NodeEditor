@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
-using System.Windows.Input;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using NodeEditor.Model;
+using System;
+using System.Collections.Generic;
+using System.Windows.Input;
 
 namespace NodeEditor.Mvvm;
 
@@ -41,7 +41,7 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
 
         DeleteNodesCommand = new RelayCommand(DeleteNodes);
     }
- 
+
     public event SelectionChangedEventHandler? SelectionChanged;
 
     public ICommand CutNodesCommand { get; }
@@ -63,10 +63,8 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
     public void NotifyDeselectedNodes()
     {
         var selectedNodes = GetSelectedNodes();
-        if (selectedNodes is { })
-        {
-            foreach (var selectedNode in selectedNodes)
-            {
+        if (selectedNodes is { }) {
+            foreach (var selectedNode in selectedNodes) {
                 selectedNode.OnDeselected();
             }
         }
@@ -75,10 +73,8 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
     public void NotifyDeselectedConnectors()
     {
         var selectedConnectors = GetSelectedConnectors();
-        if (selectedConnectors is { })
-        {
-            foreach (var selectedConnector in selectedConnectors)
-            {
+        if (selectedConnectors is { }) {
+            foreach (var selectedConnector in selectedConnectors) {
                 selectedConnector.OnDeselected();
             }
         }

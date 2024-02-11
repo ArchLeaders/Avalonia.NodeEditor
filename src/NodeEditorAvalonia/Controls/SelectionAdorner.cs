@@ -1,8 +1,8 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Immutable;
+using System;
 
 namespace NodeEditor.Controls;
 
@@ -14,14 +14,12 @@ public class SelectionAdorner : Control
     public static readonly StyledProperty<Point> BottomRightProperty =
         AvaloniaProperty.Register<SelectionAdorner, Point>(nameof(BottomRight));
 
-    public Point TopLeft
-    {
+    public Point TopLeft {
         get => GetValue(TopLeftProperty);
         set => SetValue(TopLeftProperty, value);
     }
 
-    public Point BottomRight
-    {
+    public Point BottomRight {
         get => GetValue(BottomRightProperty);
         set => SetValue(BottomRightProperty, value);
     }
@@ -43,8 +41,7 @@ public class SelectionAdorner : Control
         base.OnPropertyChanged(change);
 #pragma warning restore 8631
 
-        if (change.Property == TopLeftProperty || change.Property == BottomRightProperty)
-        {
+        if (change.Property == TopLeftProperty || change.Property == BottomRightProperty) {
             InvalidateVisual();
         }
     }

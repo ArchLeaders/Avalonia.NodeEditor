@@ -1,6 +1,6 @@
-using System;
 using CommunityToolkit.Mvvm.ComponentModel;
 using NodeEditor.Model;
+using System;
 
 namespace NodeEditor.Mvvm;
 

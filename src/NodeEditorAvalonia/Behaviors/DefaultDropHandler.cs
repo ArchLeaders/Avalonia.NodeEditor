@@ -20,8 +20,7 @@ public abstract class DefaultDropHandler : AvaloniaObject, IDropHandler
         var relativeTo = e.Source as Control;
         var point = relativeTo is { } ? e.GetPosition(relativeTo) : new Point();
         var visual = relativeTo as Visual;
-        if (visual is null)
-        {
+        if (visual is null) {
             return new Point();
         }
         var screenPoint = visual.PointToScreen(point).ToPoint(1.0);
@@ -30,13 +29,11 @@ public abstract class DefaultDropHandler : AvaloniaObject, IDropHandler
 
     public virtual void Enter(object? sender, DragEventArgs e, object? sourceContext, object? targetContext)
     {
-        if (Validate(sender, e, sourceContext, targetContext, null) == false)
-        {
+        if (Validate(sender, e, sourceContext, targetContext, null) == false) {
             e.DragEffects = DragDropEffects.None;
             e.Handled = true;
         }
-        else
-        {
+        else {
             e.DragEffects |= DragDropEffects.Copy | DragDropEffects.Move | DragDropEffects.Link;
             e.Handled = true;
         }
@@ -44,13 +41,11 @@ public abstract class DefaultDropHandler : AvaloniaObject, IDropHandler
 
     public virtual void Over(object? sender, DragEventArgs e, object? sourceContext, object? targetContext)
     {
-        if (Validate(sender, e, sourceContext, targetContext, null) == false)
-        {
+        if (Validate(sender, e, sourceContext, targetContext, null) == false) {
             e.DragEffects = DragDropEffects.None;
             e.Handled = true;
         }
-        else
-        {
+        else {
             e.DragEffects |= DragDropEffects.Copy | DragDropEffects.Move | DragDropEffects.Link;
             e.Handled = true;
         }
@@ -58,13 +53,11 @@ public abstract class DefaultDropHandler : AvaloniaObject, IDropHandler
 
     public virtual void Drop(object? sender, DragEventArgs e, object? sourceContext, object? targetContext)
     {
-        if (Execute(sender, e, sourceContext, targetContext, null) == false)
-        {
+        if (Execute(sender, e, sourceContext, targetContext, null) == false) {
             e.DragEffects = DragDropEffects.None;
             e.Handled = true;
         }
-        else
-        {
+        else {
             e.DragEffects |= DragDropEffects.Copy | DragDropEffects.Move | DragDropEffects.Link;
             e.Handled = true;
         }

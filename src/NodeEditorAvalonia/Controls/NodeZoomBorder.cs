@@ -1,5 +1,5 @@
-﻿using System.Globalization;
-using Avalonia.Controls.PanAndZoom;
+﻿using Avalonia.Controls.PanAndZoom;
+using System.Globalization;
 
 namespace NodeEditor.Controls;
 
@@ -12,8 +12,7 @@ public class NodeZoomBorder : ZoomBorder
 
     public void ZoomToCommand(object? value)
     {
-        if (Child == null || value is not string s)
-        {
+        if (Child == null || value is not string s) {
             return;
         }
 

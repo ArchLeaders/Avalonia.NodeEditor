@@ -1,7 +1,7 @@
-using System;
 using Avalonia.Controls;
 using Avalonia.Controls.Templates;
 using NodeEditorDemo.ViewModels;
+using System;
 
 namespace NodeEditorDemo;
 
@@ -12,12 +12,10 @@ public class ViewLocator : IDataTemplate
         var name = data?.GetType().FullName?.Replace("ViewModel", "View");
         var type = name is null ? null : Type.GetType(name);
 
-        if (type != null)
-        {
+        if (type != null) {
             return (Control)Activator.CreateInstance(type)!;
         }
-        else
-        {
+        else {
             return new TextBlock { Text = "Not Found: " + name };
         }
     }

@@ -1,7 +1,7 @@
-﻿using System;
-using System.Globalization;
-using Avalonia.Data;
+﻿using Avalonia.Data;
 using Avalonia.Data.Converters;
+using System;
+using System.Globalization;
 
 namespace NodeEditor.Converters;
 
@@ -16,8 +16,7 @@ internal class EnumToCheckedConverter : IValueConverter
 
     public object? ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is bool isChecked && isChecked)
-        {
+        if (value is bool isChecked && isChecked) {
             return parameter;
         }
 

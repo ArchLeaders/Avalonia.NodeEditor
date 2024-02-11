@@ -4,7 +4,6 @@ using Avalonia.Input;
 using Avalonia.Interactivity;
 using Avalonia.Xaml.Interactivity;
 using NodeEditor.Model;
-using System.Diagnostics;
 
 namespace NodeEditor.Behaviors;
 

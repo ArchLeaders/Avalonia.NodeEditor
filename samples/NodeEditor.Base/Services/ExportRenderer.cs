@@ -1,12 +1,12 @@
-using System;
-using System.IO;
-using System.Reflection;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Media;
 using Avalonia.Media.Imaging;
 using Avalonia.Skia.Helpers;
 using SkiaSharp;
+using System;
+using System.IO;
+using System.Reflection;
 
 namespace NodeEditorDemo.Services;
 
@@ -16,16 +16,14 @@ internal static class ExportRenderer
     {
         using var drawingContextImpl = DrawingContextHelper.WrapSkiaCanvas(canvas, new Vector(dpi, dpi));
         var platformDrawingContextType = typeof(DrawingContext).Assembly.GetType("Avalonia.Media.PlatformDrawingContext");
-        if (platformDrawingContextType is { })
-        {
+        if (platformDrawingContextType is { }) {
             var drawingContext = (DrawingContext?)Activator.CreateInstance(
                 platformDrawingContextType,
-                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic, 
+                BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
                 null,
-                new object?[] { drawingContextImpl, true }, 
+                new object?[] { drawingContextImpl, true },
                 null);
-            if (drawingContext is { })
-            {
+            if (drawingContext is { }) {
                 // TODO: ImmediateRenderer.Render(target, drawingContext);
             }
         }
@@ -73,7 +71,7 @@ internal static class ExportRenderer
         target.Arrange(new Rect(size));
         Render(target, canvas, dpi);
     }
-    
+
     public static void RenderXps(Control target, Size size, Stream stream, double dpi = 72)
     {
         using var managedWStream = new SKManagedWStream(stream);

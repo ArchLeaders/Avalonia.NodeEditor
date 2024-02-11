@@ -1,10 +1,10 @@
-using System.Runtime.Versioning;
-using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Browser;
 using NodeEditorDemo;
+using System.Runtime.Versioning;
+using System.Threading.Tasks;
 
-[assembly:SupportedOSPlatform("browser")]
+[assembly: SupportedOSPlatform("browser")]
 
 internal partial class Program
 {
@@ -14,7 +14,7 @@ internal partial class Program
         App.EnableMainMenu = true;
     }
 
-    private static async Task Main(string[] args) 
+    private static async Task Main(string[] args)
         => await BuildAvaloniaApp().StartBrowserAppAsync("out");
 
     public static AppBuilder BuildAvaloniaApp()

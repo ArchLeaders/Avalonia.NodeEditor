@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Avalonia;
+using System;
 using System.Runtime.InteropServices;
-using Avalonia;
 
 namespace NodeEditorDemo;
 
@@ -14,24 +14,19 @@ class Program
     {
         App.EnableInputOutput = true;
 
-        if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER")))
-        {
+        if (RuntimeInformation.IsOSPlatform(OSPlatform.Create("BROWSER"))) {
             App.EnableMainMenu = true;
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
-        {
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows)) {
             App.EnableMainMenu = true;
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
-        {
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX)) {
             App.EnableMainMenu = false;
         }
-        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
-        {
+        else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux)) {
             App.EnableMainMenu = false;
         }
-        else
-        {
+        else {
             App.EnableMainMenu = true;
         }
     }

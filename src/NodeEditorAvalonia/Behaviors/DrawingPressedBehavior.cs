@@ -12,8 +12,7 @@ public class DrawingPressedBehavior : Behavior<Control>
     {
         base.OnAttached();
 
-        if (AssociatedObject is { })
-        {
+        if (AssociatedObject is { }) {
             AssociatedObject.AddHandler(InputElement.PointerPressedEvent, Pressed, RoutingStrategies.Tunnel | RoutingStrategies.Bubble);
         }
     }
@@ -22,38 +21,32 @@ public class DrawingPressedBehavior : Behavior<Control>
     {
         base.OnDetaching();
 
-        if (AssociatedObject is { })
-        {
+        if (AssociatedObject is { }) {
             AssociatedObject.RemoveHandler(InputElement.PointerPressedEvent, Pressed);
         }
     }
 
     private void Pressed(object? sender, PointerPressedEventArgs e)
     {
-        if (e.Handled)
-        {
+        if (e.Handled) {
             return;
         }
 
-        if (AssociatedObject?.DataContext is not IDrawingNode drawingNode)
-        {
+        if (AssociatedObject?.DataContext is not IDrawingNode drawingNode) {
             return;
         }
 
-        if (e.Source is Control { DataContext: IPin })
-        {
+        if (e.Source is Control { DataContext: IPin }) {
             return;
         }
 
         var info = e.GetCurrentPoint(AssociatedObject);
         var (x, y) = e.GetPosition(AssociatedObject);
 
-        if (info.Properties.IsLeftButtonPressed)
-        {
+        if (info.Properties.IsLeftButtonPressed) {
             drawingNode.DrawingLeftPressed(x, y);
         }
-        else if (info.Properties.IsRightButtonPressed)
-        {
+        else if (info.Properties.IsRightButtonPressed) {
             drawingNode.DrawingRightPressed(x, y);
         }
     }

@@ -3,82 +3,46 @@ using System.Collections.Generic;
 
 namespace NodeEditor.Model;
 
-public sealed class NodeCreatedEventArgs : EventArgs
+public sealed class NodeCreatedEventArgs(INode? node) : EventArgs
 {
-    public INode? Node { get; }
-
-    public NodeCreatedEventArgs(INode? node)
-    {
-        Node = node;
-    }
+    public INode? Node { get; } = node;
 }
 
-public sealed class NodeRemovedEventArgs : EventArgs
+public sealed class NodeRemovedEventArgs(INode? node) : EventArgs
 {
-    public INode? Node { get; }
-
-    public NodeRemovedEventArgs(INode? node)
-    {
-        Node = node;
-    }
+    public INode? Node { get; } = node;
 }
 
-public sealed class NodeMovedEventArgs : EventArgs
+public sealed class NodeMovedEventArgs(INode? node, double x, double y) : EventArgs
 {
-    public INode? Node { get; }
+    public INode? Node { get; } = node;
 
-    public double X { get; }
+    public double X { get; } = x;
 
-    public double Y { get; }
-
-    public NodeMovedEventArgs(INode? node, double x, double y)
-    {
-        X = x;
-        Y = y;
-        Node = node;
-    }
+    public double Y { get; } = y;
 }
 
-public sealed class NodeSelectedEventArgs : EventArgs
+public sealed class NodeSelectedEventArgs(INode? node) : EventArgs
 {
-    public INode? Node { get; }
-
-    public NodeSelectedEventArgs(INode? node)
-    {
-        Node = node;
-    }
+    public INode? Node { get; } = node;
 }
 
-public sealed class NodeDeselectedEventArgs : EventArgs
+public sealed class NodeDeselectedEventArgs(INode? node) : EventArgs
 {
-    public INode? Node { get; }
-
-    public NodeDeselectedEventArgs(INode? node)
-    {
-        Node = node;
-    }
+    public INode? Node { get; } = node;
 }
 
-public sealed class NodeResizedEventArgs : EventArgs
+public sealed class NodeResizedEventArgs(INode? node, double x, double y, double width, double height) : EventArgs
 {
-    public INode? Node { get; }
+    public INode? Node { get; } = node;
 
-    public double X { get; }
+    public double X { get; } = x;
 
-    public double Y { get; }
+    public double Y { get; } = y;
 
-    public double Width { get; }
+    public double Width { get; } = width;
 
-    public double Height { get; }
-
-    public NodeResizedEventArgs(INode? node, double x, double y, double width, double height)
-    {
-        Node = node;
-        X = x;
-        Y = y;
-        Width = width;
-        Height = height;
-    }
+    public double Height { get; } = height;
 }
 
 public interface INode

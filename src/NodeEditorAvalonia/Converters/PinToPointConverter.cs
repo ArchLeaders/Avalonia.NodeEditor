@@ -1,8 +1,8 @@
-using System;
-using System.Globalization;
 using Avalonia;
 using Avalonia.Data.Converters;
 using NodeEditor.Model;
+using System;
+using System.Globalization;
 
 namespace NodeEditor.Converters;
 
@@ -12,13 +12,11 @@ public class PinToPointConverter : IValueConverter
 
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is IPin pin)
-        {
+        if (value is IPin pin) {
             var x = pin.X;
             var y = pin.Y;
 
-            if (pin.Parent is { })
-            {
+            if (pin.Parent is { }) {
                 x += pin.Parent.X;
                 y += pin.Parent.Y;
             }

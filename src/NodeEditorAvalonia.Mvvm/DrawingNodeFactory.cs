@@ -1,6 +1,6 @@
+using NodeEditor.Model;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using NodeEditor.Model;
 
 namespace NodeEditor.Mvvm;
 

@@ -1,9 +1,9 @@
-using System.Collections.Generic;
 using Nuke.Common;
 using Nuke.Common.Git;
+using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.IO;
+using System.Collections.Generic;
 using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.IO.PathConstruction;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
@@ -50,15 +50,13 @@ class Build : NukeBuild
 
     private void DeleteDirectories(IReadOnlyCollection<string> directories)
     {
-        foreach (var directory in directories)
-        {
+        foreach (var directory in directories) {
             DeleteDirectory(directory);
         }
     }
 
     Target Clean => _ => _
-        .Executes(() =>
-        {
+        .Executes(() => {
             DeleteDirectories(GlobDirectories(SourceDirectory, "**/bin", "**/obj"));
             DeleteDirectories(GlobDirectories(TestsDirectory, "**/bin", "**/obj"));
             EnsureCleanDirectory(ArtifactsDirectory);
@@ -66,16 +64,14 @@ class Build : NukeBuild
 
     Target Restore => _ => _
         .DependsOn(Clean)
-        .Executes(() =>
-        {
+        .Executes(() => {
             DotNetRestore(s => s
                 .SetProjectFile(Solution));
         });
 
     Target Compile => _ => _
         .DependsOn(Restore)
-        .Executes(() =>
-        {
+        .Executes(() => {
             DotNetBuild(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
@@ -85,8 +81,7 @@ class Build : NukeBuild
 
     Target Test => _ => _
         .DependsOn(Compile)
-        .Executes(() =>
-        {
+        .Executes(() => {
             DotNetTest(s => s
                 .SetProjectFile(Solution)
                 .SetConfiguration(Configuration)
@@ -98,8 +93,7 @@ class Build : NukeBuild
 
     Target Pack => _ => _
         .DependsOn(Test)
-        .Executes(() =>
-        {
+        .Executes(() => {
             DotNetPack(s => s
                 .SetProject(Solution)
                 .SetConfiguration(Configuration)
@@ -114,8 +108,7 @@ class Build : NukeBuild
         .Requires(() => PublishRuntime)
         .Requires(() => PublishFramework)
         .Requires(() => PublishProject)
-        .Executes(() =>
-        {
+        .Executes(() => {
             DotNetPublish(s => s
                 .SetProject(Solution.GetProject(PublishProject))
                 .SetConfiguration(Configuration)

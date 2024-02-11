@@ -1,25 +1,22 @@
-using System;
-using System.Globalization;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Data.Converters;
+using System;
+using System.Globalization;
 
 namespace NodeEditorDemo.Converters;
 
 public class ColumnWidthConverter : IValueConverter
 {
-    public static ColumnWidthConverter Instance = new ();
-    
+    public static ColumnWidthConverter Instance = new();
+
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
-        if (value is bool flag && parameter is double width)
-        {
-            if (flag)
-            {
+        if (value is bool flag && parameter is double width) {
+            if (flag) {
                 return new GridLength(width);
             }
-            else
-            {
+            else {
                 return new GridLength(0);
             }
         }

@@ -4,24 +4,20 @@ public static class ConnectorExtensions
 {
     public static void GetControlPoints(
         this IConnector connector,
-        ConnectorOrientation orientation, 
-        double offset, 
-        PinAlignment p1A, 
-        PinAlignment p2A, 
-        ref double p1X, 
-        ref double p1Y, 
-        ref double p2X, 
+        ConnectorOrientation orientation,
+        double offset,
+        PinAlignment p1A,
+        PinAlignment p2A,
+        ref double p1X,
+        ref double p1Y,
+        ref double p2X,
         ref double p2Y)
     {
-        switch (orientation)
-        {
+        switch (orientation) {
             case ConnectorOrientation.Auto:
-                switch (p1A)
-                {
-                    case PinAlignment.None:
-                    {
-                        switch (p2A)
-                        {
+                switch (p1A) {
+                    case PinAlignment.None: {
+                        switch (p2A) {
                             case PinAlignment.None:
                                 break;
                             case PinAlignment.Left:
@@ -42,10 +38,9 @@ public static class ConnectorExtensions
                                 break;
                         }
                     }
-                        break;
+                    break;
                     case PinAlignment.Left:
-                        switch (p2A)
-                        {
+                        switch (p2A) {
                             case PinAlignment.None:
                                 p1X -= offset;
                                 p2X += offset;
@@ -67,8 +62,7 @@ public static class ConnectorExtensions
                         }
                         break;
                     case PinAlignment.Right:
-                        switch (p2A)
-                        {
+                        switch (p2A) {
                             case PinAlignment.None:
                                 p1X += offset;
                                 p2X -= offset;
@@ -90,8 +84,7 @@ public static class ConnectorExtensions
                         }
                         break;
                     case PinAlignment.Top:
-                        switch (p2A)
-                        {
+                        switch (p2A) {
                             case PinAlignment.None:
                                 p1Y -= offset;
                                 p2Y += offset;
@@ -113,8 +106,7 @@ public static class ConnectorExtensions
                         }
                         break;
                     case PinAlignment.Bottom:
-                        switch (p2A)
-                        {
+                        switch (p2A) {
                             case PinAlignment.None:
                                 p1Y += offset;
                                 p2Y -= offset;
