@@ -6,7 +6,7 @@ using NodeEditor.Model;
 
 namespace NodeEditor.Behaviors;
 
-public class DrawingPressedBehavior : Behavior<ItemsControl>
+public class DrawingPressedBehavior : Behavior<Control>
 {
     protected override void OnAttached()
     {

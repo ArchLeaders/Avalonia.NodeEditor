@@ -1,5 +1,4 @@
-﻿using System;
-using Avalonia;
+﻿using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Input;
 using Avalonia.Interactivity;
@@ -7,6 +6,7 @@ using Avalonia.Reactive;
 using Avalonia.Xaml.Interactivity;
 using NodeEditor.Controls;
 using NodeEditor.Model;
+using System;
 
 namespace NodeEditor.Behaviors;
 
@@ -325,42 +325,42 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
     private void Moved(object? sender, PointerEventArgs e)
     {
         var info = e.GetCurrentPoint(_inputSource);
-
-        if (Equals(e.Pointer.Captured, _inputSource) && info.Properties.IsLeftButtonPressed && AssociatedObject?.DataContext is IDrawingNode)
+        if (AssociatedObject?.DataContext is not IDrawingNode drawingNode || !info.Properties.IsLeftButtonPressed) {
+            return;
+        }
+        
+        if (Equals(e.Pointer.Captured, _inputSource))
         {
             var position = e.GetPosition(AssociatedObject);
 
             if (_dragSelectedItems)
             {
-                if (AssociatedObject?.DataContext is IDrawingNode drawingNode)
+                var selectedNodes = drawingNode.GetSelectedNodes();
+
+                if (selectedNodes is { Count: > 0 } && drawingNode.Nodes is { Count: > 0 })
                 {
-                    var selectedNodes = drawingNode.GetSelectedNodes();
+                    position = SnapHelper.Snap(position, SnapX, SnapY, EnableSnap);
 
-                    if (selectedNodes is { Count: > 0 } && drawingNode.Nodes is { Count: > 0 })
+                    var deltaX = position.X - _start.X;
+                    var deltaY = position.Y - _start.Y;
+                    _start = position;
+
+                    foreach (var node in selectedNodes)
                     {
-                        position = SnapHelper.Snap(position, SnapX, SnapY, EnableSnap);
-
-                        var deltaX = position.X - _start.X;
-                        var deltaY = position.Y - _start.Y;
-                        _start = position;
-
-                        foreach (var node in selectedNodes)
+                        if (node.CanMove())
                         {
-                            if (node.CanMove())
-                            {
-                                node.Move(deltaX, deltaY);
-                                node.OnMoved();
-                            }
+                            node.Move(deltaX, deltaY);
+                            node.OnMoved();
                         }
-
-                        var selectedRect = HitTestHelper.CalculateSelectedRect(AssociatedObject);
-
-                        _selectedRect = selectedRect;
-
-                        UpdateSelected(selectedRect);
-
-                        e.Handled = true;
                     }
+
+                    var selectedRect = HitTestHelper.CalculateSelectedRect(AssociatedObject);
+
+                    _selectedRect = selectedRect;
+
+                    UpdateSelected(selectedRect);
+
+                    e.Handled = true;
                 }
             }
             else
