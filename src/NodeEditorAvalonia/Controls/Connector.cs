@@ -41,17 +41,17 @@ public class Connector : Shape
 
     protected override Geometry CreateDefiningGeometry()
     {
-        var geometry = new StreamGeometry();
+        StreamGeometry geometry = new();
 
-        using var context = geometry.Open();
+        using StreamGeometryContext context = geometry.Open();
 
         context.BeginFigure(StartPoint, false);
 
         if (DataContext is IConnector connector) {
-            var p1X = StartPoint.X;
-            var p1Y = StartPoint.Y;
-            var p2X = EndPoint.X;
-            var p2Y = EndPoint.Y;
+            double p1X = StartPoint.X;
+            double p1Y = StartPoint.Y;
+            double p2X = EndPoint.X;
+            double p2Y = EndPoint.Y;
 
             connector.GetControlPoints(
                 connector.Orientation,

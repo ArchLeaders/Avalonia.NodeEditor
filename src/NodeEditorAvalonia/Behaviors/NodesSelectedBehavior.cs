@@ -5,6 +5,7 @@ using Avalonia.Reactive;
 using Avalonia.Xaml.Interactivity;
 using NodeEditor.Model;
 using System;
+using System.Collections.Generic;
 
 namespace NodeEditor.Behaviors;
 
@@ -17,7 +18,7 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
     {
         base.OnAttached();
 
-        if (AssociatedObject is { }) {
+        if (AssociatedObject is not null) {
             _dataContextDisposable = AssociatedObject
                 .GetObservable(StyledElement.DataContextProperty)
                 .Subscribe(x => {
@@ -42,8 +43,8 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
     {
         base.OnDetaching();
 
-        if (AssociatedObject is { }) {
-            if (_drawingNode is { }) {
+        if (AssociatedObject is not null) {
+            if (_drawingNode is not null) {
                 _drawingNode.SelectionChanged -= DrawingNode_SelectionChanged;
             }
 
@@ -58,9 +59,9 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
             return;
         }
 
-        if (_drawingNode is { }) {
-            var selectedNodes = _drawingNode.GetSelectedNodes();
-            var selectedConnectors = _drawingNode.GetSelectedConnectors();
+        if (_drawingNode is not null) {
+            ISet<INode>? selectedNodes = _drawingNode.GetSelectedNodes();
+            ISet<IConnector>? selectedConnectors = _drawingNode.GetSelectedConnectors();
 
             if (selectedNodes is { Count: > 0 } || selectedConnectors is { Count: > 0 }) {
                 AddSelectedPseudoClasses(AssociatedObject);
@@ -73,14 +74,14 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
 
     private void AddSelectedPseudoClasses(ItemsControl itemsControl)
     {
-        foreach (var control in itemsControl.GetRealizedContainers()) {
+        foreach (Control control in itemsControl.GetRealizedContainers()) {
             if (control is not { DataContext: INode node } containerControl) {
                 continue;
             }
 
-            var selectedNodes = _drawingNode?.GetSelectedNodes();
+            ISet<INode>? selectedNodes = _drawingNode?.GetSelectedNodes();
 
-            if (_drawingNode is { } && selectedNodes is { } && selectedNodes.Contains(node)) {
+            if (_drawingNode is not null && selectedNodes is not null && selectedNodes.Contains(node)) {
                 if (containerControl is ContentPresenter { Child: { } child }) {
                     if (child.Classes is IPseudoClasses pseudoClasses) {
                         pseudoClasses.Add(":selected");
@@ -99,7 +100,7 @@ public class NodesSelectedBehavior : Behavior<ItemsControl>
 
     private static void RemoveSelectedPseudoClasses(ItemsControl itemsControl)
     {
-        foreach (var control in itemsControl.GetRealizedContainers()) {
+        foreach (Control control in itemsControl.GetRealizedContainers()) {
             if (control is not { DataContext: INode } containerControl) {
                 continue;
             }

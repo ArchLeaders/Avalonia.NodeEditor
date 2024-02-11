@@ -56,7 +56,7 @@ internal static class StorageService
         }
 
         if (Application.Current?.ApplicationLifetime is ISingleViewApplicationLifetime { MainView: { } mainView }) {
-            var visualRoot = mainView.GetVisualRoot();
+            Avalonia.Rendering.IRenderRoot? visualRoot = mainView.GetVisualRoot();
             if (visualRoot is TopLevel topLevel) {
                 return topLevel.StorageProvider;
             }

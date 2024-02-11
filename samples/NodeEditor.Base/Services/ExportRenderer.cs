@@ -14,10 +14,10 @@ internal static class ExportRenderer
 {
     private static void Render(Control target, SKCanvas canvas, double dpi = 96)
     {
-        using var drawingContextImpl = DrawingContextHelper.WrapSkiaCanvas(canvas, new Vector(dpi, dpi));
-        var platformDrawingContextType = typeof(DrawingContext).Assembly.GetType("Avalonia.Media.PlatformDrawingContext");
+        using Avalonia.Platform.IDrawingContextImpl drawingContextImpl = DrawingContextHelper.WrapSkiaCanvas(canvas, new Vector(dpi, dpi));
+        Type? platformDrawingContextType = typeof(DrawingContext).Assembly.GetType("Avalonia.Media.PlatformDrawingContext");
         if (platformDrawingContextType is { }) {
-            var drawingContext = (DrawingContext?)Activator.CreateInstance(
+            DrawingContext? drawingContext = (DrawingContext?)Activator.CreateInstance(
                 platformDrawingContextType,
                 BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic,
                 null,
@@ -31,9 +31,9 @@ internal static class ExportRenderer
 
     public static void RenderPng(Control target, Size size, Stream stream, double dpi = 96)
     {
-        var pixelSize = new PixelSize((int)size.Width, (int)size.Height);
-        var dpiVector = new Vector(dpi, dpi);
-        using var bitmap = new RenderTargetBitmap(pixelSize, dpiVector);
+        PixelSize pixelSize = new((int)size.Width, (int)size.Height);
+        Vector dpiVector = new(dpi, dpi);
+        using RenderTargetBitmap bitmap = new(pixelSize, dpiVector);
         target.Measure(size);
         target.Arrange(new Rect(size));
         bitmap.Render(target);
@@ -42,9 +42,9 @@ internal static class ExportRenderer
 
     public static void RenderSvg(Control target, Size size, Stream stream, double dpi = 96)
     {
-        using var managedWStream = new SKManagedWStream(stream);
-        var bounds = SKRect.Create(new SKSize((float)size.Width, (float)size.Height));
-        using var canvas = SKSvgCanvas.Create(bounds, managedWStream);
+        using SKManagedWStream managedWStream = new(stream);
+        SKRect bounds = SKRect.Create(new SKSize((float)size.Width, (float)size.Height));
+        using SKCanvas canvas = SKSvgCanvas.Create(bounds, managedWStream);
         target.Measure(size);
         target.Arrange(new Rect(size));
         Render(target, canvas, dpi);
@@ -52,21 +52,21 @@ internal static class ExportRenderer
 
     public static void RenderSkp(Control target, Size size, Stream stream, double dpi = 96)
     {
-        var bounds = SKRect.Create(new SKSize((float)size.Width, (float)size.Height));
-        using var pictureRecorder = new SKPictureRecorder();
-        using var canvas = pictureRecorder.BeginRecording(bounds);
+        SKRect bounds = SKRect.Create(new SKSize((float)size.Width, (float)size.Height));
+        using SKPictureRecorder pictureRecorder = new();
+        using SKCanvas canvas = pictureRecorder.BeginRecording(bounds);
         target.Measure(size);
         target.Arrange(new Rect(size));
         Render(target, canvas, dpi);
-        using var picture = pictureRecorder.EndRecording();
+        using SKPicture picture = pictureRecorder.EndRecording();
         picture.Serialize(stream);
     }
 
     public static void RenderPdf(Control target, Size size, Stream stream, double dpi = 72)
     {
-        using var managedWStream = new SKManagedWStream(stream);
-        using var document = SKDocument.CreatePdf(stream, (float)dpi);
-        using var canvas = document.BeginPage((float)size.Width, (float)size.Height);
+        using SKManagedWStream managedWStream = new(stream);
+        using SKDocument document = SKDocument.CreatePdf(stream, (float)dpi);
+        using SKCanvas canvas = document.BeginPage((float)size.Width, (float)size.Height);
         target.Measure(size);
         target.Arrange(new Rect(size));
         Render(target, canvas, dpi);
@@ -74,9 +74,9 @@ internal static class ExportRenderer
 
     public static void RenderXps(Control target, Size size, Stream stream, double dpi = 72)
     {
-        using var managedWStream = new SKManagedWStream(stream);
-        using var document = SKDocument.CreateXps(stream, (float)dpi);
-        using var canvas = document.BeginPage((float)size.Width, (float)size.Height);
+        using SKManagedWStream managedWStream = new(stream);
+        using SKDocument document = SKDocument.CreateXps(stream, (float)dpi);
+        using SKCanvas canvas = document.BeginPage((float)size.Width, (float)size.Height);
         target.Measure(size);
         target.Arrange(new Rect(size));
         Render(target, canvas, dpi);

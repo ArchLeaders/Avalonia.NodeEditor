@@ -22,11 +22,11 @@ public class App : Application
 
     public override void OnFrameworkInitializationCompleted()
     {
-        var vm = new MainViewViewModel {
+        MainViewViewModel vm = new() {
             IsToolboxVisible = true
         };
 
-        var editor = new EditorViewModel {
+        EditorViewModel editor = new() {
             Serializer = new NodeSerializer(typeof(ObservableCollection<>)),
             Factory = new NodeFactory()
         };

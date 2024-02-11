@@ -17,7 +17,7 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
     {
         base.OnAttached();
 
-        if (AssociatedObject is { }) {
+        if (AssociatedObject is not null) {
             _dataContextDisposable = AssociatedObject
                 .GetObservable(StyledElement.DataContextProperty)
                 .Subscribe(new AnonymousObserver<object?>(
@@ -44,8 +44,8 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
     {
         base.OnDetaching();
 
-        if (AssociatedObject is { }) {
-            if (_drawingNode is { }) {
+        if (AssociatedObject is not null) {
+            if (_drawingNode is not null) {
                 _drawingNode.SelectionChanged -= DrawingNode_SelectionChanged;
             }
 
@@ -59,9 +59,9 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
             return;
         }
 
-        if (_drawingNode is { }) {
-            var selectedNodes = _drawingNode.GetSelectedNodes();
-            var selectedConnectors = _drawingNode.GetSelectedConnectors();
+        if (_drawingNode is not null) {
+            System.Collections.Generic.ISet<INode>? selectedNodes = _drawingNode.GetSelectedNodes();
+            System.Collections.Generic.ISet<IConnector>? selectedConnectors = _drawingNode.GetSelectedConnectors();
 
             if (selectedNodes is { Count: > 0 } || selectedConnectors is { Count: > 0 }) {
                 AddSelectedPseudoClasses(AssociatedObject);
@@ -74,14 +74,14 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
 
     private void AddSelectedPseudoClasses(ItemsControl itemsControl)
     {
-        foreach (var control in itemsControl.GetRealizedContainers()) {
+        foreach (Control control in itemsControl.GetRealizedContainers()) {
             if (control is not { DataContext: IConnector connector } containerControl) {
                 continue;
             }
 
-            var selectedConnectors = _drawingNode?.GetSelectedConnectors();
+            System.Collections.Generic.ISet<IConnector>? selectedConnectors = _drawingNode?.GetSelectedConnectors();
 
-            if (_drawingNode is { } && selectedConnectors is { } && selectedConnectors.Contains(connector)) {
+            if (_drawingNode is not null && selectedConnectors is not null && selectedConnectors.Contains(connector)) {
                 if (containerControl is ContentPresenter { Child: { } child }) {
                     if (child.Classes is IPseudoClasses pseudoClasses) {
                         pseudoClasses.Add(":selected");
@@ -100,7 +100,7 @@ public class ConnectorsSelectedBehavior : Behavior<ItemsControl>
 
     private static void RemoveSelectedPseudoClasses(ItemsControl itemsControl)
     {
-        foreach (var control in itemsControl.GetRealizedContainers()) {
+        foreach (Control control in itemsControl.GetRealizedContainers()) {
             if (control is not { DataContext: IConnector } containerControl) {
                 continue;
             }

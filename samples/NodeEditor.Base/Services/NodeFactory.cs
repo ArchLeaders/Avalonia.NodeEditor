@@ -10,7 +10,7 @@ public class NodeFactory : INodeFactory
 {
     internal static INode CreateRectangle(double x, double y, double width, double height, string? label, double pinSize = 10)
     {
-        var node = new NodeViewModel {
+        NodeViewModel node = new() {
             X = x,
             Y = y,
             Width = width,
@@ -29,7 +29,7 @@ public class NodeFactory : INodeFactory
 
     internal static INode CreateEllipse(double x, double y, double width, double height, string? label, double pinSize = 10)
     {
-        var node = new NodeViewModel {
+        NodeViewModel node = new() {
             X = x,
             Y = y,
             Width = width,
@@ -48,7 +48,7 @@ public class NodeFactory : INodeFactory
 
     internal static INode CreateSignal(double x, double y, double width = 180, double height = 30, string? label = null, bool? state = false, double pinSize = 10, string name = "SIGNAL")
     {
-        var node = new NodeViewModel {
+        NodeViewModel node = new() {
             Name = name,
             X = x,
             Y = y,
@@ -66,7 +66,7 @@ public class NodeFactory : INodeFactory
 
     internal static INode CreateAndGate(double x, double y, double width = 60, double height = 60, double pinSize = 10, string name = "AND")
     {
-        var node = new NodeViewModel {
+        NodeViewModel node = new() {
             Name = name,
             X = x,
             Y = y,
@@ -86,7 +86,7 @@ public class NodeFactory : INodeFactory
 
     internal static INode CreateOrGate(double x, double y, double width = 60, double height = 60, int count = 1, double pinSize = 10, string name = "OR")
     {
-        var node = new NodeViewModel {
+        NodeViewModel node = new() {
             Name = name,
             X = x,
             Y = y,
@@ -114,7 +114,7 @@ public class NodeFactory : INodeFactory
 
     public IDrawingNode CreateDrawing(string? name = null)
     {
-        var drawing = new DrawingNodeViewModel {
+        DrawingNodeViewModel drawing = new() {
             Name = name,
             X = 0,
             Y = 0,

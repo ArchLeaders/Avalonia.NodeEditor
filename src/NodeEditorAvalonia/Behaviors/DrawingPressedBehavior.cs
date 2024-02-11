@@ -40,8 +40,8 @@ public class DrawingPressedBehavior : Behavior<Control>
             return;
         }
 
-        var info = e.GetCurrentPoint(AssociatedObject);
-        var (x, y) = e.GetPosition(AssociatedObject);
+        PointerPoint info = e.GetCurrentPoint(AssociatedObject);
+        (double x, double y) = e.GetPosition(AssociatedObject);
 
         if (info.Properties.IsLeftButtonPressed) {
             drawingNode.DrawingLeftPressed(x, y);

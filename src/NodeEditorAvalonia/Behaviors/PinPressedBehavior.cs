@@ -41,13 +41,11 @@ public class PinPressedBehavior : Behavior<ContentPresenter>
         }
 
         if (nodeViewModel.Parent is IDrawingNode drawingNode) {
-            var info = e.GetCurrentPoint(AssociatedObject);
+            PointerPoint info = e.GetCurrentPoint(AssociatedObject);
 
             if (info.Properties.IsLeftButtonPressed) {
-                var showWhenMoving = info.Pointer.Type == PointerType.Mouse;
-
+                bool showWhenMoving = info.Pointer.Type == PointerType.Mouse;
                 drawingNode.ConnectorLeftPressed(pin, showWhenMoving);
-
                 e.Handled = true;
             }
         }

@@ -1,14 +1,5 @@
 ﻿using Avalonia;
 using Avalonia.Controls;
-
-/* Unmerged change from project 'NodeEditorAvalonia (net6.0)'
-Before:
-using Avalonia;
-using Avalonia.Controls;
-After:
-using Avalonia.VisualTree;
-using NodeEditor.Controls;
-*/
 using NodeEditor.Model;
 using System;
 using System.Collections.Generic;
@@ -24,19 +15,20 @@ internal static class HitTestHelper
 
     public static Point[] FlattenCubic(Point pt0, Point pt1, Point pt2, Point pt3)
     {
-        var count = (int)Math.Max(1, Length(pt0, pt1) + Length(pt1, pt2) + Length(pt2, pt3));
-        var points = new Point[count];
+        int count = (int)Math.Max(1, Length(pt0, pt1) + Length(pt1, pt2) + Length(pt2, pt3));
+        Point[] points = new Point[count];
 
-        for (var i = 0; i < count; i++) {
-            var t = (i + 1d) / count;
-            var x = (1 - t) * (1 - t) * (1 - t) * pt0.X +
+        for (int i = 0; i < count; i++) {
+            double t = (i + 1d) / count;
+            double x = (1 - t) * (1 - t) * (1 - t) * pt0.X +
                     3 * t * (1 - t) * (1 - t) * pt1.X +
                     3 * t * t * (1 - t) * pt2.X +
                     t * t * t * pt3.X;
-            var y = (1 - t) * (1 - t) * (1 - t) * pt0.Y +
+            double y = (1 - t) * (1 - t) * (1 - t) * pt0.Y +
                     3 * t * (1 - t) * (1 - t) * pt1.Y +
                     3 * t * t * (1 - t) * pt2.Y +
                     t * t * t * pt3.Y;
+
             points[i] = new Point(x, y);
         }
 
@@ -45,31 +37,31 @@ internal static class HitTestHelper
 
     public static bool HitTestConnector(IConnector connector, Rect rect)
     {
-        var start = connector.Start;
-        var end = connector.End;
+        IPin? start = connector.Start;
+        IPin? end = connector.End;
         if (start is null || end is null) {
             return false;
         }
 
-        var p0X = start.X;
-        var p0Y = start.Y;
-        if (start.Parent is { }) {
+        double p0X = start.X;
+        double p0Y = start.Y;
+        if (start.Parent is not null) {
             p0X += start.Parent.X;
             p0Y += start.Parent.Y;
         }
 
-        var p3X = end.X;
-        var p3Y = end.Y;
-        if (end.Parent is { }) {
+        double p3X = end.X;
+        double p3Y = end.Y;
+        if (end.Parent is not null) {
             p3X += end.Parent.X;
             p3Y += end.Parent.Y;
         }
 
-        var p1X = p0X;
-        var p1Y = p0Y;
+        double p1X = p0X;
+        double p1Y = p0Y;
 
-        var p2X = p3X;
-        var p2Y = p3Y;
+        double p2X = p3X;
+        double p2Y = p3Y;
 
         connector.GetControlPoints(
             connector.Orientation,
@@ -79,14 +71,14 @@ internal static class HitTestHelper
             ref p1X, ref p1Y,
             ref p2X, ref p2Y);
 
-        var pt0 = new Point(p0X, p0Y);
-        var pt1 = new Point(p1X, p1Y);
-        var pt2 = new Point(p2X, p2Y);
-        var pt3 = new Point(p3X, p3Y);
+        Point pt0 = new(p0X, p0Y);
+        Point pt1 = new(p1X, p1Y);
+        Point pt2 = new(p2X, p2Y);
+        Point pt3 = new(p3X, p3Y);
 
-        var points = FlattenCubic(pt0, pt1, pt2, pt3);
+        Point[] points = FlattenCubic(pt0, pt1, pt2, pt3);
 
-        for (var i = 0; i < points.Length; i++) {
+        for (int i = 0; i < points.Length; i++) {
             if (rect.Contains(points[i])) {
                 return true;
             }
@@ -97,31 +89,31 @@ internal static class HitTestHelper
 
     public static Rect GetConnectorBounds(IConnector connector)
     {
-        var start = connector.Start;
-        var end = connector.End;
+        IPin? start = connector.Start;
+        IPin? end = connector.End;
         if (start is null || end is null) {
             return default;
         }
 
-        var p0X = start.X;
-        var p0Y = start.Y;
+        double p0X = start.X;
+        double p0Y = start.Y;
         if (start.Parent is { }) {
             p0X += start.Parent.X;
             p0Y += start.Parent.Y;
         }
 
-        var p3X = end.X;
-        var p3Y = end.Y;
+        double p3X = end.X;
+        double p3Y = end.Y;
         if (end.Parent is { }) {
             p3X += end.Parent.X;
             p3Y += end.Parent.Y;
         }
 
-        var p1X = p0X;
-        var p1Y = p0Y;
+        double p1X = p0X;
+        double p1Y = p0Y;
 
-        var p2X = p3X;
-        var p2Y = p3Y;
+        double p2X = p3X;
+        double p2Y = p3Y;
 
         connector.GetControlPoints(
             connector.Orientation,
@@ -131,19 +123,19 @@ internal static class HitTestHelper
             ref p1X, ref p1Y,
             ref p2X, ref p2Y);
 
-        var pt0 = new Point(p0X, p0Y);
-        var pt1 = new Point(p1X, p1Y);
-        var pt2 = new Point(p2X, p2Y);
-        var pt3 = new Point(p3X, p3Y);
+        Point pt0 = new(p0X, p0Y);
+        Point pt1 = new(p1X, p1Y);
+        Point pt2 = new(p2X, p2Y);
+        Point pt3 = new(p3X, p3Y);
 
-        var points = FlattenCubic(pt0, pt1, pt2, pt3);
+        Point[] points = FlattenCubic(pt0, pt1, pt2, pt3);
 
-        var topLeftX = 0.0;
-        var topLeftY = 0.0;
-        var bottomRightX = 0.0;
-        var bottomRightY = 0.0;
+        double topLeftX = 0.0;
+        double topLeftY = 0.0;
+        double bottomRightX = 0.0;
+        double bottomRightY = 0.0;
 
-        for (var i = 0; i < points.Length; i++) {
+        for (int i = 0; i < points.Length; i++) {
             if (i == 0) {
                 topLeftX = points[i].X;
                 topLeftY = points[i].Y;
@@ -175,16 +167,16 @@ internal static class HitTestHelper
         drawingNode.SetSelectedConnectors(null);
         drawingNode.NotifySelectionChanged();
 
-        var selectedNodes = new HashSet<INode>();
-        var selectedConnectors = new HashSet<IConnector>();
+        HashSet<INode> selectedNodes = [];
+        HashSet<IConnector> selectedConnectors = [];
 
         if (drawingNode.CanSelectNodes()) {
-            foreach (var control in itemsControl.GetRealizedContainers()) {
+            foreach (Control control in itemsControl.GetRealizedContainers()) {
                 if (control is not { DataContext: INode node } containerControl) {
                     continue;
                 }
 
-                var bounds = containerControl.Bounds;
+                Rect bounds = containerControl.Bounds;
 
                 if (!rect.Intersects(bounds)) {
                     continue;
@@ -198,7 +190,7 @@ internal static class HitTestHelper
 
         if (drawingNode.CanSelectConnectors()) {
             if (drawingNode.Connectors is { Count: > 0 }) {
-                foreach (var connector in drawingNode.Connectors) {
+                foreach (IConnector connector in drawingNode.Connectors) {
                     if (!HitTestConnector(connector, rect)) {
                         continue;
                     }
@@ -210,7 +202,7 @@ internal static class HitTestHelper
             }
         }
 
-        var notify = false;
+        bool notify = false;
 
         if (selectedConnectors.Count > 0) {
             drawingNode.SetSelectedConnectors(selectedConnectors);
@@ -233,25 +225,25 @@ internal static class HitTestHelper
             return default;
         }
 
-        var selectedRect = new Rect();
+        Rect selectedRect = new();
 
         itemsControl.UpdateLayout();
 
-        var selectedNodes = drawingNode.GetSelectedNodes();
-        var selectedConnectors = drawingNode.GetSelectedConnectors();
+        ISet<INode>? selectedNodes = drawingNode.GetSelectedNodes();
+        ISet<IConnector>? selectedConnectors = drawingNode.GetSelectedConnectors();
 
         if (selectedNodes is { Count: > 0 } && drawingNode.Nodes is { Count: > 0 }) {
-            foreach (var node in selectedNodes) {
-                var index = drawingNode.Nodes.IndexOf(node);
-                var selectedControl = itemsControl.ContainerFromIndex(index);
-                var bounds = selectedControl?.Bounds ?? default;
+            foreach (INode node in selectedNodes) {
+                int index = drawingNode.Nodes.IndexOf(node);
+                Control? selectedControl = itemsControl.ContainerFromIndex(index);
+                Rect bounds = selectedControl?.Bounds ?? default;
                 selectedRect = selectedRect == default ? bounds : selectedRect.Union(bounds);
             }
         }
 
         if (selectedConnectors is { Count: > 0 } && drawingNode.Connectors is { Count: > 0 }) {
-            foreach (var connector in selectedConnectors) {
-                var bounds = GetConnectorBounds(connector);
+            foreach (IConnector connector in selectedConnectors) {
+                Rect bounds = GetConnectorBounds(connector);
                 selectedRect = selectedRect == default ? bounds : selectedRect.Union(bounds);
             }
         }

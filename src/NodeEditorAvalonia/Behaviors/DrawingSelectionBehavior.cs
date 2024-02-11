@@ -7,6 +7,7 @@ using Avalonia.Xaml.Interactivity;
 using NodeEditor.Controls;
 using NodeEditor.Model;
 using System;
+using System.Collections.Generic;
 
 namespace NodeEditor.Behaviors;
 
@@ -152,17 +153,17 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
         }
 
         if (_drawingNode is { }) {
-            var selectedNodes = _drawingNode.GetSelectedNodes();
-            var selectedConnectors = _drawingNode.GetSelectedConnectors();
+            ISet<INode>? selectedNodes = _drawingNode.GetSelectedNodes();
+            ISet<IConnector>? selectedConnectors = _drawingNode.GetSelectedConnectors();
 
             if (selectedNodes is { Count: > 0 } || selectedConnectors is { Count: > 0 }) {
                 _selectedRect = HitTestHelper.CalculateSelectedRect(AssociatedObject);
 
-                if (_selectedAdorner is { }) {
+                if (_selectedAdorner is not null) {
                     RemoveSelected();
                 }
 
-                if (!(_selectedRect == default) && _selectedAdorner is null) {
+                if (_selectedRect != default && _selectedAdorner is null) {
                     AddSelected(_selectedRect);
                 }
             }
@@ -178,7 +179,7 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
             return;
         }
 
-        var info = e.GetCurrentPoint(_inputSource);
+        PointerPoint info = e.GetCurrentPoint(_inputSource);
 
         if (AssociatedObject?.DataContext is not IDrawingNode drawingNode) {
             return;
@@ -188,7 +189,7 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
             return;
         }
 
-        var position = e.GetPosition(AssociatedObject);
+        Point position = e.GetPosition(AssociatedObject);
 
         if (!drawingNode.CanSelectNodes() && !drawingNode.CanSelectConnectors()) {
             return;
@@ -200,9 +201,9 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
 
         _dragSelectedItems = false;
 
-        var pointerHitTestRect = new Rect(position.X - 1, position.Y - 1, 3, 3);
-        var selectedNodes = drawingNode.GetSelectedNodes();
-        var selectedConnectors = drawingNode.GetSelectedConnectors();
+        Rect pointerHitTestRect = new(position.X - 1, position.Y - 1, 3, 3);
+        ISet<INode>? selectedNodes = drawingNode.GetSelectedNodes();
+        ISet<IConnector>? selectedConnectors = drawingNode.GetSelectedConnectors();
 
         if (selectedNodes is { Count: > 0 } || selectedConnectors is { Count: > 0 }) {
             if (_selectedRect.Contains(position)) {
@@ -284,32 +285,32 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
 
     private void Moved(object? sender, PointerEventArgs e)
     {
-        var info = e.GetCurrentPoint(_inputSource);
+        PointerPoint info = e.GetCurrentPoint(_inputSource);
         if (AssociatedObject?.DataContext is not IDrawingNode drawingNode || !info.Properties.IsLeftButtonPressed) {
             return;
         }
 
         if (Equals(e.Pointer.Captured, _inputSource)) {
-            var position = e.GetPosition(AssociatedObject);
+            Point position = e.GetPosition(AssociatedObject);
 
             if (_dragSelectedItems) {
-                var selectedNodes = drawingNode.GetSelectedNodes();
+                ISet<INode>? selectedNodes = drawingNode.GetSelectedNodes();
 
                 if (selectedNodes is { Count: > 0 } && drawingNode.Nodes is { Count: > 0 }) {
                     position = SnapHelper.Snap(position, SnapX, SnapY, EnableSnap);
 
-                    var deltaX = position.X - _start.X;
-                    var deltaY = position.Y - _start.Y;
+                    double deltaX = position.X - _start.X;
+                    double deltaY = position.Y - _start.Y;
                     _start = position;
 
-                    foreach (var node in selectedNodes) {
+                    foreach (INode node in selectedNodes) {
                         if (node.CanMove()) {
                             node.Move(deltaX, deltaY);
                             node.OnMoved();
                         }
                     }
 
-                    var selectedRect = HitTestHelper.CalculateSelectedRect(AssociatedObject);
+                    Rect selectedRect = HitTestHelper.CalculateSelectedRect(AssociatedObject);
 
                     _selectedRect = selectedRect;
 
@@ -330,8 +331,7 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
 
     private void AddSelection(double x, double y)
     {
-        var layer = AdornerCanvas;
-        if (layer is null) {
+        if (AdornerCanvas is not Canvas canvas) {
             return;
         }
 
@@ -341,26 +341,23 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
             BottomRight = new Point(x, y)
         };
 
-        layer.Children.Add(_selectionAdorner);
-
+        canvas.Children.Add(_selectionAdorner);
         InputSource?.InvalidateVisual();
     }
 
     private void RemoveSelection()
     {
-        var layer = AdornerCanvas;
-        if (layer is null || _selectionAdorner is null) {
+        if (AdornerCanvas is not Canvas canvas || _selectionAdorner is null) {
             return;
         }
 
-        layer.Children.Remove(_selectionAdorner);
+        canvas.Children.Remove(_selectionAdorner);
         _selectionAdorner = null;
     }
 
     private void UpdateSelection(double x, double y)
     {
-        var layer = AdornerCanvas;
-        if (layer is null) {
+        if (AdornerCanvas is not Canvas canvas) {
             return;
         }
 
@@ -368,14 +365,13 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
             selection.BottomRight = new Point(x, y);
         }
 
-        layer.InvalidateVisual();
+        canvas.InvalidateVisual();
         InputSource?.InvalidateVisual();
     }
 
     private void AddSelected(Rect rect)
     {
-        var layer = AdornerCanvas;
-        if (layer is null) {
+        if (AdornerCanvas is not Canvas canvas) {
             return;
         }
 
@@ -384,35 +380,32 @@ public class DrawingSelectionBehavior : Behavior<ItemsControl>
             Rect = rect
         };
 
-        layer.Children.Add(_selectedAdorner);
-
-        layer.InvalidateVisual();
+        canvas.Children.Add(_selectedAdorner);
+        canvas.InvalidateVisual();
         InputSource?.InvalidateVisual();
     }
 
     private void RemoveSelected()
     {
-        var layer = AdornerCanvas;
-        if (layer is null || _selectedAdorner is null) {
+        if (AdornerCanvas is not Canvas canvas || _selectedAdorner is null) {
             return;
         }
 
-        layer.Children.Remove(_selectedAdorner);
+        canvas.Children.Remove(_selectedAdorner);
         _selectedAdorner = null;
     }
 
     private void UpdateSelected(Rect rect)
     {
-        var layer = AdornerCanvas;
-        if (layer is null) {
+        if (AdornerCanvas is not Canvas canvas) {
             return;
         }
 
-        if (_selectedAdorner is { } selected) {
-            selected.Rect = rect;
+        if (_selectedAdorner is not null) {
+            _selectedAdorner.Rect = rect;
         }
 
-        layer.InvalidateVisual();
+        canvas.InvalidateVisual();
         InputSource?.InvalidateVisual();
     }
 }

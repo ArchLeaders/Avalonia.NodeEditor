@@ -62,9 +62,9 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
 
     public void NotifyDeselectedNodes()
     {
-        var selectedNodes = GetSelectedNodes();
+        ISet<INode>? selectedNodes = GetSelectedNodes();
         if (selectedNodes is { }) {
-            foreach (var selectedNode in selectedNodes) {
+            foreach (INode selectedNode in selectedNodes) {
                 selectedNode.OnDeselected();
             }
         }
@@ -72,9 +72,9 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
 
     public void NotifyDeselectedConnectors()
     {
-        var selectedConnectors = GetSelectedConnectors();
+        ISet<IConnector>? selectedConnectors = GetSelectedConnectors();
         if (selectedConnectors is { }) {
-            foreach (var selectedConnector in selectedConnectors) {
+            foreach (IConnector selectedConnector in selectedConnectors) {
                 selectedConnector.OnDeselected();
             }
         }
@@ -106,7 +106,7 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
 
     public virtual bool CanConnectPin(IPin pin) => _editor.CanConnectPin(pin);
 
-    public virtual void DrawingLeftPressed(double x, double y) => _editor.DrawingLeftPressed(x, y);
+    public virtual void DrawingLeftPressed(double x, double y) => _editor.DrawingLeftPressed();
 
     public virtual void DrawingRightPressed(double x, double y) => _editor.DrawingRightPressed(x, y);
 

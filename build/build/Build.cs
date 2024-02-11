@@ -1,3 +1,6 @@
+#pragma warning disable CA1822 // Mark members as static
+#pragma warning disable IDE0051 // Remove unused private members
+
 using Nuke.Common;
 using Nuke.Common.Git;
 using Nuke.Common.IO;
@@ -44,13 +47,13 @@ class Build : NukeBuild
 
     protected override void OnBuildInitialized()
     {
-        Configuration = Configuration ?? "Release";
-        VersionSuffix = VersionSuffix ?? "";
+        Configuration ??= "Release";
+        VersionSuffix ??= "";
     }
 
     private void DeleteDirectories(IReadOnlyCollection<string> directories)
     {
-        foreach (var directory in directories) {
+        foreach (string directory in directories) {
             DeleteDirectory(directory);
         }
     }

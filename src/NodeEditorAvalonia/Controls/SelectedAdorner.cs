@@ -17,9 +17,7 @@ public class SelectedAdorner : Control
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-#pragma warning disable 8631
         base.OnPropertyChanged(change);
-#pragma warning restore 8631
 
         if (change.Property == RectProperty) {
             InvalidateVisual();
@@ -30,12 +28,14 @@ public class SelectedAdorner : Control
     {
         base.Render(context);
 
-        var thickness = 2.0;
-        var pen = new ImmutablePen(
+        // TODO: Pull SystemAccentColor
+
+        double thickness = 2.0;
+        ImmutablePen pen = new(
             new ImmutableSolidColorBrush(new Color(0xFF, 0x17, 0x9D, 0xE3)),
             thickness);
-        var bounds = Rect;
-        var rect = bounds.Deflate(thickness * 0.5);
+        Rect bounds = Rect;
+        Rect rect = bounds.Deflate(thickness * 0.5);
         context.DrawRectangle(null, pen, rect);
     }
 }

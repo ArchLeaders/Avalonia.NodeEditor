@@ -26,10 +26,10 @@ public class SelectionAdorner : Control
 
     public Rect GetRect()
     {
-        var topLeftX = Math.Min(TopLeft.X, BottomRight.X);
-        var topLeftY = Math.Min(TopLeft.Y, BottomRight.Y);
-        var bottomRightX = Math.Max(TopLeft.X, BottomRight.X);
-        var bottomRightY = Math.Max(TopLeft.Y, BottomRight.Y);
+        double topLeftX = Math.Min(TopLeft.X, BottomRight.X);
+        double topLeftY = Math.Min(TopLeft.Y, BottomRight.Y);
+        double bottomRightX = Math.Max(TopLeft.X, BottomRight.X);
+        double bottomRightY = Math.Max(TopLeft.Y, BottomRight.Y);
         return new Rect(
             new Point(topLeftX, topLeftY),
             new Point(bottomRightX, bottomRightY));
@@ -37,9 +37,7 @@ public class SelectionAdorner : Control
 
     protected override void OnPropertyChanged(AvaloniaPropertyChangedEventArgs change)
     {
-#pragma warning disable 8631
         base.OnPropertyChanged(change);
-#pragma warning restore 8631
 
         if (change.Property == TopLeftProperty || change.Property == BottomRightProperty) {
             InvalidateVisual();
@@ -50,13 +48,14 @@ public class SelectionAdorner : Control
     {
         base.Render(context);
 
-        var brush = new ImmutableSolidColorBrush(new Color(0xFF, 0x00, 0x00, 0xFF), 0.3);
-        var thickness = 2.0;
-        var pen = new ImmutablePen(
+        ImmutableSolidColorBrush brush = new(new Color(0xFF, 0x00, 0x00, 0xFF), 0.3);
+        double thickness = 2.0;
+        ImmutablePen pen = new(
             new ImmutableSolidColorBrush(new Color(0xFF, 0x00, 0x00, 0xFF)),
             thickness);
-        var bounds = GetRect();
-        var rect = bounds.Deflate(thickness * 0.5);
+
+        Rect bounds = GetRect();
+        Rect rect = bounds.Deflate(thickness * 0.5);
         context.DrawRectangle(brush, pen, rect);
     }
 }

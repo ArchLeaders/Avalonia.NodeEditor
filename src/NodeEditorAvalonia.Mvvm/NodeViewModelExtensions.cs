@@ -7,7 +7,7 @@ public static class NodeViewModelExtensions
 {
     public static IPin AddPin(this NodeViewModel node, double x, double y, double width, double height, PinAlignment alignment = PinAlignment.None, string? name = null)
     {
-        var pin = new PinViewModel {
+        PinViewModel pin = new() {
             Name = name,
             Parent = node,
             X = x,

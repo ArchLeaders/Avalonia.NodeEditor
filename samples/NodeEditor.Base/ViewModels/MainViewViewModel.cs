@@ -56,33 +56,33 @@ public partial class MainViewViewModel : ViewModelBase
 
     private List<FilePickerFileType> GetOpenFileTypes()
     {
-        return new List<FilePickerFileType>
-        {
+        return
+        [
             StorageService.Json,
             StorageService.All
-        };
+        ];
     }
 
     private static List<FilePickerFileType> GetSaveFileTypes()
     {
-        return new List<FilePickerFileType>
-        {
+        return
+        [
             StorageService.Json,
             StorageService.All
-        };
+        ];
     }
 
     private static List<FilePickerFileType> GetExportFileTypes()
     {
-        return new List<FilePickerFileType>
-        {
+        return
+        [
             StorageService.ImagePng,
             StorageService.ImageSvg,
             StorageService.Pdf,
             StorageService.Xps,
             StorageService.ImageSkp,
             StorageService.All
-        };
+        ];
     }
 
     [RelayCommand]
@@ -92,25 +92,25 @@ public partial class MainViewViewModel : ViewModelBase
             return;
         }
 
-        var storageProvider = StorageService.GetStorageProvider();
+        IStorageProvider? storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null) {
             return;
         }
 
-        var result = await storageProvider.OpenFilePickerAsync(new FilePickerOpenOptions {
+        IReadOnlyList<IStorageFile> result = await storageProvider.OpenFilePickerAsync(new FilePickerOpenOptions {
             Title = "Open drawing",
             FileTypeFilter = GetOpenFileTypes(),
             AllowMultiple = false
         });
 
-        var file = result.FirstOrDefault();
+        IStorageFile? file = result.FirstOrDefault();
 
         if (file is not null) {
             try {
-                await using var stream = await file.OpenReadAsync();
-                using var reader = new StreamReader(stream);
-                var json = await reader.ReadToEndAsync();
-                var drawing = Editor.Serializer.Deserialize<DrawingNodeViewModel?>(json);
+                await using Stream stream = await file.OpenReadAsync();
+                using StreamReader reader = new(stream);
+                string json = await reader.ReadToEndAsync();
+                DrawingNodeViewModel? drawing = Editor.Serializer.Deserialize<DrawingNodeViewModel?>(json);
                 if (drawing is { }) {
                     Editor.Drawing = drawing;
                     Editor.Drawing.SetSerializer(Editor.Serializer);
@@ -130,12 +130,12 @@ public partial class MainViewViewModel : ViewModelBase
             return;
         }
 
-        var storageProvider = StorageService.GetStorageProvider();
+        IStorageProvider? storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null) {
             return;
         }
 
-        var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions {
+        IStorageFile? file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions {
             Title = "Save drawing",
             FileTypeChoices = GetSaveFileTypes(),
             SuggestedFileName = Path.GetFileNameWithoutExtension("drawing"),
@@ -145,9 +145,9 @@ public partial class MainViewViewModel : ViewModelBase
 
         if (file is not null) {
             try {
-                var json = Editor.Serializer.Serialize(Editor.Drawing);
-                await using var stream = await file.OpenWriteAsync();
-                await using var writer = new StreamWriter(stream);
+                string json = Editor.Serializer.Serialize(Editor.Drawing);
+                await using Stream stream = await file.OpenWriteAsync();
+                await using StreamWriter writer = new(stream);
                 await writer.WriteAsync(json);
             }
             catch (Exception ex) {
@@ -164,12 +164,12 @@ public partial class MainViewViewModel : ViewModelBase
             return;
         }
 
-        var storageProvider = StorageService.GetStorageProvider();
+        IStorageProvider? storageProvider = StorageService.GetStorageProvider();
         if (storageProvider is null) {
             return;
         }
 
-        var file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions {
+        IStorageFile? file = await storageProvider.SaveFilePickerAsync(new FilePickerSaveOptions {
             Title = "Export drawing",
             FileTypeChoices = GetExportFileTypes(),
             SuggestedFileName = Path.GetFileNameWithoutExtension("drawing"),
@@ -179,11 +179,11 @@ public partial class MainViewViewModel : ViewModelBase
 
         if (file is not null) {
             try {
-                var control = new DrawingNode {
+                DrawingNode control = new() {
                     DataContext = Editor.Drawing
                 };
 
-                var root = new ExportRoot() {
+                ExportRoot root = new() {
                     Width = Editor.Drawing.Width,
                     Height = Editor.Drawing.Height,
                     Child = control
@@ -194,44 +194,44 @@ public partial class MainViewViewModel : ViewModelBase
                 root.InvalidateArrange();
                 root.UpdateLayout();
 
-                var size = new Size(Editor.Drawing.Width, Editor.Drawing.Height);
+                Size size = new(Editor.Drawing.Width, Editor.Drawing.Height);
 
                 if (file.Name.EndsWith(".png", StringComparison.OrdinalIgnoreCase)) {
-                    using var ms = new MemoryStream();
+                    using MemoryStream ms = new();
                     ExportRenderer.RenderPng(root, size, ms);
-                    await using var stream = await file.OpenWriteAsync();
+                    await using Stream stream = await file.OpenWriteAsync();
                     ms.Position = 0;
                     await stream.WriteAsync(ms.ToArray());
                 }
 
                 if (file.Name.EndsWith(".svg", StringComparison.OrdinalIgnoreCase)) {
-                    using var ms = new MemoryStream();
+                    using MemoryStream ms = new();
                     ExportRenderer.RenderSvg(root, size, ms);
-                    await using var stream = await file.OpenWriteAsync();
+                    await using Stream stream = await file.OpenWriteAsync();
                     ms.Position = 0;
                     await stream.WriteAsync(ms.ToArray());
                 }
 
                 if (file.Name.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase)) {
-                    using var ms = new MemoryStream();
+                    using MemoryStream ms = new();
                     ExportRenderer.RenderPdf(root, size, ms, 96);
-                    await using var stream = await file.OpenWriteAsync();
+                    await using Stream stream = await file.OpenWriteAsync();
                     ms.Position = 0;
                     await stream.WriteAsync(ms.ToArray());
                 }
 
                 if (file.Name.EndsWith("xps", StringComparison.OrdinalIgnoreCase)) {
-                    using var ms = new MemoryStream();
+                    using MemoryStream ms = new();
                     ExportRenderer.RenderXps(control, size, ms, 96);
-                    await using var stream = await file.OpenWriteAsync();
+                    await using Stream stream = await file.OpenWriteAsync();
                     ms.Position = 0;
                     await stream.WriteAsync(ms.ToArray());
                 }
 
                 if (file.Name.EndsWith("skp", StringComparison.OrdinalIgnoreCase)) {
-                    using var ms = new MemoryStream();
+                    using MemoryStream ms = new();
                     ExportRenderer.RenderSkp(control, size, ms);
-                    await using var stream = await file.OpenWriteAsync();
+                    await using Stream stream = await file.OpenWriteAsync();
                     ms.Position = 0;
                     await stream.WriteAsync(ms.ToArray());
                 }

@@ -3,7 +3,6 @@ using Avalonia.Controls;
 using Avalonia.Input;
 using NodeEditor.Controls;
 using NodeEditor.Model;
-using System.Linq;
 
 namespace NodeEditor.Behaviors;
 
@@ -17,37 +16,36 @@ public class DrawingDropHandler : DefaultDropHandler
         set => SetValue(RelativeToProperty, value);
     }
 
-    private bool Validate(IDrawingNode drawing, object? sender, DragEventArgs e, bool bExecute)
+    private bool Validate(IDrawingNode drawing, object? sender, DragEventArgs e, bool isExecuting)
     {
-        var relativeTo = RelativeTo ?? sender as Control;
+        Control? relativeTo = RelativeTo ?? sender as Control;
         if (relativeTo is null) {
             return false;
         }
-        var point = GetPosition(relativeTo, e);
+
+        Point point = e.GetPosition(relativeTo);
 
         if (relativeTo is DrawingNode drawingNode) {
             point = SnapHelper.Snap(point, drawingNode.SnapX, drawingNode.SnapY, drawingNode.EnableSnap);
         }
 
         if (e.Data.Contains(DataFormats.Text)) {
-            var text = e.Data.GetText();
-
-            if (bExecute) {
-                if (text is { }) {
-                    // TODO: text
-                }
-            }
+            // TODO: text
+            // 
+            // if (isExecuting && e.Data.GetText() is string text) {
+            // 
+            // }
 
             return true;
         }
 
-        foreach (var format in e.Data.GetDataFormats()) {
-            var data = e.Data.Get(format);
+        foreach (string format in e.Data.GetDataFormats()) {
+            object? data = e.Data.Get(format);
 
             switch (data) {
                 case INodeTemplate template: {
-                    if (bExecute) {
-                        var node = drawing.Clone(template.Template);
+                    if (isExecuting) {
+                        INode? node = drawing.Clone(template.Template);
                         if (node is { }) {
                             node.Parent = drawing;
                             node.Move(point.X, point.Y);
@@ -61,11 +59,12 @@ public class DrawingDropHandler : DefaultDropHandler
         }
 
         if (e.Data.Contains(DataFormats.Files)) {
-            // ReSharper disable once UnusedVariable
-            var files = e.Data.GetFiles()?.ToArray();
-            if (bExecute) {
-                // TODO: files, point.X, point.Y
-            }
+            // TODO: files, point.X, point.Y
+            // 
+            // var files = e.Data.GetFiles()?.ToArray();
+            // if (isExecuting) {
+            // 
+            // }
 
             return true;
         }

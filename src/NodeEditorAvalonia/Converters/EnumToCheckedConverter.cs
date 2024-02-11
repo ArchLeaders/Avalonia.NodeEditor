@@ -7,7 +7,7 @@ namespace NodeEditor.Converters;
 
 internal class EnumToCheckedConverter : IValueConverter
 {
-    public static EnumToCheckedConverter Instance = new();
+    public static EnumToCheckedConverter Instance { get; } = new();
 
     public object? Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {

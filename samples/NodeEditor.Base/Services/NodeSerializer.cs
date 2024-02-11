@@ -13,14 +13,9 @@ internal class NodeSerializer : INodeSerializer
 {
     private readonly JsonSerializerSettings _settings;
 
-    private class ListContractResolver : DefaultContractResolver
+    private class ListContractResolver(Type listType) : DefaultContractResolver
     {
-        private readonly Type _listType;
-
-        public ListContractResolver(Type listType)
-        {
-            _listType = listType;
-        }
+        private readonly Type _listType = listType;
 
         public override JsonContract ResolveContract(Type type)
         {
@@ -60,19 +55,19 @@ internal class NodeSerializer : INodeSerializer
 
     public T? Load<T>(string path)
     {
-        using var stream = System.IO.File.OpenRead(path);
-        using var streamReader = new System.IO.StreamReader(stream, Encoding.UTF8);
-        var text = streamReader.ReadToEnd();
+        using System.IO.FileStream stream = System.IO.File.OpenRead(path);
+        using System.IO.StreamReader streamReader = new(stream, Encoding.UTF8);
+        string text = streamReader.ReadToEnd();
         return Deserialize<T>(text);
     }
 
     public void Save<T>(string path, T value)
     {
-        var text = Serialize(value);
+        string text = Serialize(value);
         if (string.IsNullOrWhiteSpace(text))
             return;
-        using var stream = System.IO.File.Create(path);
-        using var streamWriter = new System.IO.StreamWriter(stream, Encoding.UTF8);
+        using System.IO.FileStream stream = System.IO.File.Create(path);
+        using System.IO.StreamWriter streamWriter = new(stream, Encoding.UTF8);
         streamWriter.Write(text);
     }
 }

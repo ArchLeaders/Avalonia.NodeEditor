@@ -8,7 +8,7 @@ namespace NodeEditor.Converters;
 
 public class PinMarginConverter : IValueConverter
 {
-    public static PinMarginConverter Instance = new();
+    public static PinMarginConverter Instance { get; } = new();
 
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {

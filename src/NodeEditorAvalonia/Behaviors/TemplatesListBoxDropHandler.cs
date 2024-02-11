@@ -18,8 +18,8 @@ public class TemplatesListBoxDropHandler : DropHandlerBase
             return false;
         }
 
-        var sourceIndex = nodeTemplatesHost.Templates.IndexOf(sourceItem);
-        var targetIndex = nodeTemplatesHost.Templates.IndexOf(targetItem);
+        int sourceIndex = nodeTemplatesHost.Templates.IndexOf(sourceItem);
+        int targetIndex = nodeTemplatesHost.Templates.IndexOf(targetItem);
 
         if (sourceIndex < 0 || targetIndex < 0) {
             return false;
@@ -51,6 +51,7 @@ public class TemplatesListBoxDropHandler : DropHandlerBase
         if (e.Source is Control && sender is ListBox listBox) {
             return Validate<INodeTemplate>(listBox, e, sourceContext, targetContext, false);
         }
+
         return false;
     }
 
@@ -59,6 +60,7 @@ public class TemplatesListBoxDropHandler : DropHandlerBase
         if (e.Source is Control && sender is ListBox listBox) {
             return Validate<INodeTemplate>(listBox, e, sourceContext, targetContext, true);
         }
+
         return false;
     }
 }

@@ -18,9 +18,9 @@ public class NodeZoomBorder : ZoomBorder
 
         ResetMatrix();
 
-        var ratio = double.Parse(s, CultureInfo.InvariantCulture);
-        var x = Child.Bounds.Width / 2.0;
-        var y = Child.Bounds.Height / 2.0;
+        double ratio = double.Parse(s, CultureInfo.InvariantCulture);
+        double x = Child.Bounds.Width / 2.0;
+        double y = Child.Bounds.Height / 2.0;
 
         ZoomTo(ratio, x, y);
     }

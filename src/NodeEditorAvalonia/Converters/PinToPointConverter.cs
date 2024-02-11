@@ -8,13 +8,13 @@ namespace NodeEditor.Converters;
 
 public class PinToPointConverter : IValueConverter
 {
-    public static PinToPointConverter Instance = new();
+    public static PinToPointConverter Instance { get; } = new();
 
     public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture)
     {
         if (value is IPin pin) {
-            var x = pin.X;
-            var y = pin.Y;
+            double x = pin.X;
+            double y = pin.Y;
 
             if (pin.Parent is { }) {
                 x += pin.Parent.X;

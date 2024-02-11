@@ -50,33 +50,34 @@ public class GridDecorator : Decorator
             return;
         }
 
-        var cw = GridCellWidth;
-        var ch = GridCellHeight;
-        if (cw <= 0 || ch <= 0.0) {
+        double cw = GridCellWidth;
+        double ch = GridCellHeight;
+        if (cw <= 0.0 || ch <= 0.0) {
             return;
         }
 
-        var rect = Bounds;
-        var thickness = 1.0;
+        Rect rect = Bounds;
+        double thickness = 1.0;
 
-        var brush = new ImmutableSolidColorBrush(Color.FromArgb(255, 222, 222, 222));
-        var pen = new ImmutablePen(brush, thickness);
+        ImmutableSolidColorBrush brush = new(Color.FromArgb(255, 222, 222, 222));
+        ImmutablePen pen = new(brush, thickness);
 
-        using var _ = context.PushTransform(Matrix.CreateTranslation(-0.5d, -0.5d));
+        using DrawingContext.PushedState _ = context.PushTransform(Matrix.CreateTranslation(-0.5d, -0.5d));
 
-        var ox = rect.X;
-        var ex = rect.X + rect.Width;
-        var oy = rect.Y;
-        var ey = rect.Y + rect.Height;
-        for (var x = ox + cw; x < ex; x += cw) {
-            var p0 = new Point(x + 0.5, oy + 0.5);
-            var p1 = new Point(x + 0.5, ey + 0.5);
+        double ox = rect.X;
+        double ex = rect.X + rect.Width;
+        double oy = rect.Y;
+        double ey = rect.Y + rect.Height;
+
+        for (double x = ox + cw; x < ex; x += cw) {
+            Point p0 = new(x + 0.5, oy + 0.5);
+            Point p1 = new(x + 0.5, ey + 0.5);
             context.DrawLine(pen, p0, p1);
         }
 
-        for (var y = oy + ch; y < ey; y += ch) {
-            var p0 = new Point(ox + 0.5, y + 0.5);
-            var p1 = new Point(ex + 0.5, y + 0.5);
+        for (double y = oy + ch; y < ey; y += ch) {
+            Point p0 = new(ox + 0.5, y + 0.5);
+            Point p1 = new(ex + 0.5, y + 0.5);
             context.DrawLine(pen, p0, p1);
         }
 
