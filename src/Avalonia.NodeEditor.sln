@@ -1,0 +1,59 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.NodeEditor", "Avalonia.NodeEditor\Avalonia.NodeEditor.csproj", "{1811055C-237A-4A50-AF57-79C6E372A9AB}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.NodeEditor.Core", "Avalonia.NodeEditor.Core\Avalonia.NodeEditor.Core.csproj", "{B56A2734-5DA6-46BF-99A4-644F6F1DCCBD}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.NodeEditor.Core.Mvvm", "Avalonia.NodeEditor.Core.Mvvm\Avalonia.NodeEditor.Core.Mvvm.csproj", "{616B38C2-9CD3-4B21-A179-4DAE11E4DB6A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{65A723D9-057F-4CC7-BF94-8217D4959686}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.NodeEditor.Demo", "Samples\Avalonia.NodeEditor.Demo\Avalonia.NodeEditor.Demo.csproj", "{D1D6AEA2-E00F-43DF-ADED-73854F8B8CB0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.NodeEditor.Demo.Desktop", "Samples\Avalonia.NodeEditor.Demo.Desktop\Avalonia.NodeEditor.Demo.Desktop.csproj", "{9B1EB3D8-4893-4F02-9DC4-35120CFBC5A2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Avalonia.NodeEditor.Demo.Browser", "Samples\Avalonia.NodeEditor.Demo.Browser\Avalonia.NodeEditor.Demo.Browser.csproj", "{82A87E92-F2D6-47BF-AA24-11FDB8E49B15}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1811055C-237A-4A50-AF57-79C6E372A9AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1811055C-237A-4A50-AF57-79C6E372A9AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1811055C-237A-4A50-AF57-79C6E372A9AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1811055C-237A-4A50-AF57-79C6E372A9AB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B56A2734-5DA6-46BF-99A4-644F6F1DCCBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B56A2734-5DA6-46BF-99A4-644F6F1DCCBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B56A2734-5DA6-46BF-99A4-644F6F1DCCBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B56A2734-5DA6-46BF-99A4-644F6F1DCCBD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{616B38C2-9CD3-4B21-A179-4DAE11E4DB6A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{616B38C2-9CD3-4B21-A179-4DAE11E4DB6A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{616B38C2-9CD3-4B21-A179-4DAE11E4DB6A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{616B38C2-9CD3-4B21-A179-4DAE11E4DB6A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1D6AEA2-E00F-43DF-ADED-73854F8B8CB0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1D6AEA2-E00F-43DF-ADED-73854F8B8CB0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1D6AEA2-E00F-43DF-ADED-73854F8B8CB0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1D6AEA2-E00F-43DF-ADED-73854F8B8CB0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B1EB3D8-4893-4F02-9DC4-35120CFBC5A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B1EB3D8-4893-4F02-9DC4-35120CFBC5A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B1EB3D8-4893-4F02-9DC4-35120CFBC5A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B1EB3D8-4893-4F02-9DC4-35120CFBC5A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{82A87E92-F2D6-47BF-AA24-11FDB8E49B15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{82A87E92-F2D6-47BF-AA24-11FDB8E49B15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{82A87E92-F2D6-47BF-AA24-11FDB8E49B15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{82A87E92-F2D6-47BF-AA24-11FDB8E49B15}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{D1D6AEA2-E00F-43DF-ADED-73854F8B8CB0} = {65A723D9-057F-4CC7-BF94-8217D4959686}
+		{9B1EB3D8-4893-4F02-9DC4-35120CFBC5A2} = {65A723D9-057F-4CC7-BF94-8217D4959686}
+		{82A87E92-F2D6-47BF-AA24-11FDB8E49B15} = {65A723D9-057F-4CC7-BF94-8217D4959686}
+	EndGlobalSection
+EndGlobal

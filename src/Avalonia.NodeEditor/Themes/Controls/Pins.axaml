@@ -1,0 +1,47 @@
+﻿<ResourceDictionary xmlns="https://github.com/avaloniaui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:behaviors="clr-namespace:Avalonia.NodeEditor.Behaviors"
+                    xmlns:controls="clr-namespace:Avalonia.NodeEditor.Controls"
+                    xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+                    xmlns:m="clr-namespace:Avalonia.NodeEditor.Core;assembly=Avalonia.NodeEditor.Core"
+                    x:CompileBindings="True">
+
+    <ControlTheme x:Key="{x:Type controls:Pins}" TargetType="controls:Pins">
+        <Setter Property="ClipToBounds" Value="False" />
+        <Setter Property="Template">
+            <ControlTemplate x:DataType="m:INode">
+                <ItemsControl Name="PART_PinsItemsControl"
+                              ClipToBounds="False"
+                              ItemsSource="{Binding Pins}">
+                    <ItemsControl.Styles>
+                        <Style x:DataType="m:IPin" Selector="ItemsControl > ContentPresenter">
+                            <Setter Property="Canvas.Left" Value="{Binding X}" />
+                            <Setter Property="Canvas.Top" Value="{Binding Y}" />
+                        </Style>
+
+                        <Style Selector="ItemsControl > :is(ContentPresenter)">
+                            <Setter Property="(i:Interaction.Behaviors)">
+                                <i:BehaviorCollectionTemplate>
+                                    <i:BehaviorCollection>
+                                        <behaviors:PinPressedBehavior />
+                                    </i:BehaviorCollection>
+                                </i:BehaviorCollectionTemplate>
+                            </Setter>
+                        </Style>
+                    </ItemsControl.Styles>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Canvas />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="m:IPin">
+                            <controls:Pin Name="PART_Pin" />
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ControlTemplate>
+        </Setter>
+    </ControlTheme>
+
+</ResourceDictionary>

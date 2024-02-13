@@ -1,0 +1,26 @@
+<UserControl x:Class="Avalonia.NodeEditor.Demo.Views.MainView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:editor="using:Avalonia.NodeEditor.Controls"
+             xmlns:vm="clr-namespace:Avalonia.NodeEditor.Demo.ViewModels"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="vm:MainViewModel"
+             Background="{DynamicResource SystemChromeLowColor}"
+             mc:Ignorable="d">
+    <Design.DataContext>
+        <vm:MainViewModel />
+    </Design.DataContext>
+
+    <Grid ColumnDefinitions="0.4*,Auto,*">
+        <editor:Toolbox />
+        <GridSplitter Grid.Column="1"
+                      MinWidth="2"
+                      Margin="5"
+                      Background="{DynamicResource SystemChromeMediumColor}"
+                      CornerRadius="1" />
+        <editor:Editor Grid.Column="2" DataContext="{Binding Drawing}" />
+    </Grid>
+</UserControl>

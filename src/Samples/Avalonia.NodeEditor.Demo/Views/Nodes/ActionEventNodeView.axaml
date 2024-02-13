@@ -1,0 +1,23 @@
+<UserControl x:Class="Avalonia.NodeEditor.Demo.Views.Nodes.ActionEventNodeView"
+             xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:n="using:Avalonia.NodeEditor.Demo.ViewModels.Nodes"
+             Width="120"
+             Height="90"
+             d:DesignHeight="450"
+             d:DesignWidth="800"
+             x:DataType="n:ActionEventNode"
+             mc:Ignorable="d">
+    <Border Padding="10"
+            Background="{DynamicResource SystemChromeMediumColor}"
+            BorderBrush="{DynamicResource SystemAccentColor}"
+            BorderThickness="1"
+            BoxShadow="1 1 15 #85000000"
+            CornerRadius="5">
+        <Grid RowDefinitions="*,Auto">
+            <TextBlock Text="{Binding Name}" />
+        </Grid>
+    </Border>
+</UserControl>

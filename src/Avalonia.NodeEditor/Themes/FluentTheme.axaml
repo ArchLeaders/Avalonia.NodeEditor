@@ -1,0 +1,20 @@
+﻿<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:CompileBindings="True">
+    <Styles.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/Pin.axaml" />
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/Pins.axaml" />
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/Node.axaml" />
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/Nodes.axaml" />
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/Connector.axaml" />
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/Connectors.axaml" />
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/DrawingNode.axaml" />
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/DrawingNodeProperties.axaml" />
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/Editor.axaml" />
+                <ResourceInclude Source="avares://Avalonia.NodeEditor/Themes/Controls/Toolbox.axaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Styles.Resources>
+</Styles>
