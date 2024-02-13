@@ -32,7 +32,7 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void Exit()
+    private static void Exit()
     {
         if (Application.Current?.ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktopLifetime) {
             desktopLifetime.Shutdown();
@@ -40,7 +40,7 @@ public partial class MainViewViewModel : ViewModelBase
     }
 
     [RelayCommand]
-    private void About()
+    private static void About()
     {
         // TODO: About dialog.
     }
@@ -103,7 +103,7 @@ public partial class MainViewViewModel : ViewModelBase
             AllowMultiple = false
         });
 
-        IStorageFile? file = result.FirstOrDefault();
+        IStorageFile? file = result.Count > 0 ? result[0] : null;
 
         if (file is not null) {
             try {

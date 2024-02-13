@@ -19,8 +19,6 @@ public class NodeFactory : INodeFactory
             Content = new RectangleViewModel { Label = label }
         };
 
-        node.AddPin(0, height / 2, pinSize, pinSize, PinAlignment.Left, "L");
-        node.AddPin(width, height / 2, pinSize, pinSize, PinAlignment.Right, "R");
         node.AddPin(width / 2, 0, pinSize, pinSize, PinAlignment.Top, "T");
         node.AddPin(width / 2, height, pinSize, pinSize, PinAlignment.Bottom, "B");
 
@@ -32,14 +30,13 @@ public class NodeFactory : INodeFactory
         NodeViewModel node = new() {
             X = x,
             Y = y,
+            Name = "Fork",
             Width = width,
             Height = height,
             Pins = new ObservableCollection<IPin>(),
             Content = new EllipseViewModel { Label = label }
         };
 
-        node.AddPin(0, height / 2, pinSize, pinSize, PinAlignment.Left, "L");
-        node.AddPin(width, height / 2, pinSize, pinSize, PinAlignment.Right, "R");
         node.AddPin(width / 2, 0, pinSize, pinSize, PinAlignment.Top, "T");
         node.AddPin(width / 2, height, pinSize, pinSize, PinAlignment.Bottom, "B");
 
