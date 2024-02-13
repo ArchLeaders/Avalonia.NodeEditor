@@ -104,7 +104,30 @@ public partial class DrawingNodeViewModel : NodeViewModel, IDrawingNode
 
     public virtual bool CanSelectConnectors() => _editor.CanSelectConnectors();
 
-    public virtual bool CanConnectPin(IPin pin) => _editor.CanConnectPin(pin);
+    public virtual bool CanConnectPin(IPin pin)
+    {
+        bool isConnecting = _editor.IsConnectorMoving();
+
+        if (isConnecting == false && pin.Name == "T") {
+            return false;
+        }
+
+        if (isConnecting && pin.Name == "T") {
+            return true;
+        }
+
+        if (pin.Parent is INode node && node.Name == "Fork") {
+            return true;
+        }
+
+        if (!EnableMultiplePinConnections) {
+            if (_editor.IsPinConnected(pin)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
 
     public virtual void DrawingLeftPressed(double x, double y) => _editor.DrawingLeftPressed();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.NetworkInformation;
 
 namespace NodeEditor.Model;
 
@@ -66,13 +67,7 @@ public sealed class DrawingNodeEditor(IDrawingNode node, IDrawingNodeFactory fac
 
     public bool CanConnectPin(IPin pin)
     {
-        if (!_node.EnableMultiplePinConnections) {
-            if (IsPinConnected(pin)) {
-                return false;
-            }
-        }
-
-        return true;
+        return _node.CanConnectPin(pin);
     }
 
     private static void NotifyPinsRemoved(INode node)
