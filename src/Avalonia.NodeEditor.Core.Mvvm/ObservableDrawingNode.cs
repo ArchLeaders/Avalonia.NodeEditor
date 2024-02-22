@@ -1,3 +1,5 @@
+#pragma warning disable IDE0028 // Simplify collection initialization
+
 using Avalonia.NodeEditor.Core;
 using Avalonia.NodeEditor.Core.Mvvm.Services;
 using CommunityToolkit.Mvvm.ComponentModel;
