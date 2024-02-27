@@ -43,6 +43,35 @@ public partial class ObservableNode : ObservableObject, INode
 
     public event EventHandler<NodeResizedEventArgs>? Resized;
 
+    public ObservableNode(bool deleteConnectionsOnRemoved = true)
+    {
+        if (deleteConnectionsOnRemoved == false) {
+            return;
+        }
+
+        Removed += (s, e) => {
+            if (Pins is null || Parent is not IDrawingNode drawing || drawing.Connectors is null) {
+                return;
+            }
+
+            for (int i = 0; i < drawing.Connectors.Count;) {
+                IConnector connector = drawing.Connectors[i];
+
+                if (connector.Start is not null && Pins.Contains(connector.Start)) {
+                    drawing.Connectors.RemoveAt(i);
+                    continue;
+                }
+
+                if (connector.End is not null && Pins.Contains(connector.End)) {
+                    drawing.Connectors.RemoveAt(i);
+                    continue;
+                }
+
+                i++;
+            }
+        };
+    }
+
     public virtual bool CanSelect()
     {
         return true;
