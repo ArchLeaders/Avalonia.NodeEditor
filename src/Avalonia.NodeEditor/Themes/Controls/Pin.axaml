@@ -25,15 +25,15 @@
         </Setter>
 
         <Style Selector="^/template/ Ellipse#PART_Pin">
-            <Setter Property="Fill" Value="{DynamicResource SystemChromeMediumColor}" />
-            <Setter Property="Stroke" Value="{DynamicResource TextControlForeground}" />
-            <Setter Property="StrokeThickness" Value="2" />
+            <Setter Property="Fill" Value="{DynamicResource TextControlForeground}" />
+            <Setter Property="Stroke" Value="{DynamicResource SystemChromeMediumColor}" />
+            <Setter Property="StrokeThickness" Value="4" />
         </Style>
 
         <Style Selector="^:pointerover /template/ Ellipse#PART_Pin">
-            <Setter Property="Fill" Value="{DynamicResource SystemChromeMediumColor}" />
-            <Setter Property="Stroke" Value="{DynamicResource SystemAccentColor}" />
-            <Setter Property="StrokeThickness" Value="2" />
+            <Setter Property="Fill" Value="{DynamicResource SystemAccentColor}" />
+            <Setter Property="Stroke" Value="{DynamicResource SystemChromeMediumColor}" />
+            <Setter Property="StrokeThickness" Value="5" />
         </Style>
 
     </ControlTheme>
