@@ -13,49 +13,38 @@
 
         <Setter Property="Template">
             <ControlTemplate x:DataType="m:IEditor">
-
-                <ListBox Background="Transparent" ItemsSource="{Binding Templates}">
-                    <ListBox.Resources>
-                        <behaviors:TemplatesListBoxDropHandler x:Key="TemplatesListBoxDropHandler" />
-                    </ListBox.Resources>
-                    <i:Interaction.Behaviors>
-                        <idd:ContextDropBehavior Handler="{StaticResource TemplatesListBoxDropHandler}" />
-                    </i:Interaction.Behaviors>
-                    <ListBox.Styles>
-                        <Style Selector="ListBox > ListBoxItem">
-                            <Setter Property="(i:Interaction.Behaviors)">
-                                <i:BehaviorCollectionTemplate>
-                                    <i:BehaviorCollection>
-                                        <idd:ContextDragBehavior />
-                                        <behaviors:InsertTemplateOnDoubleTappedBehavior Drawing="{Binding Drawing}" />
-                                    </i:BehaviorCollection>
-                                </i:BehaviorCollectionTemplate>
-                            </Setter>
-                        </Style>
-                    </ListBox.Styles>
-                    <ListBox.ItemTemplate>
-                        <DataTemplate DataType="m:INodeTemplate">
-                            <DockPanel>
-                                <Viewbox Width="32"
-                                         Height="32"
-                                         DataContext="{Binding Preview}"
-                                         DockPanel.Dock="Left">
-                                    <controls:Node IsHitTestVisible="False">
-                                        <controls:Node.Styles>
-                                            <Style Selector="controls|Pins /template/ ItemsControl#PART_PinsItemsControl">
-                                                <Setter Property="IsVisible" Value="False" />
-                                            </Style>
-                                        </controls:Node.Styles>
-                                    </controls:Node>
-                                </Viewbox>
-                                <Panel Margin="12,6,12,6">
-                                    <TextBlock VerticalAlignment="Center" Text="{Binding Title}" />
-                                </Panel>
-                            </DockPanel>
-                        </DataTemplate>
-                    </ListBox.ItemTemplate>
-                </ListBox>
-
+                <StackPanel>
+                    <TextBlock Margin="0,5"
+                               FontWeight="Bold"
+                               Text="Nodes" />
+                    <ListBox Background="Transparent" ItemsSource="{Binding Templates}">
+                        <ListBox.Resources>
+                            <behaviors:TemplatesListBoxDropHandler x:Key="TemplatesListBoxDropHandler" />
+                        </ListBox.Resources>
+                        <i:Interaction.Behaviors>
+                            <idd:ContextDropBehavior Handler="{StaticResource TemplatesListBoxDropHandler}" />
+                        </i:Interaction.Behaviors>
+                        <ListBox.Styles>
+                            <Style Selector="ListBox > ListBoxItem">
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="Padding" Value="10,3,10,4" />
+                                <Setter Property="(i:Interaction.Behaviors)">
+                                    <i:BehaviorCollectionTemplate>
+                                        <i:BehaviorCollection>
+                                            <idd:ContextDragBehavior />
+                                            <behaviors:InsertTemplateOnDoubleTappedBehavior Drawing="{Binding Drawing}" />
+                                        </i:BehaviorCollection>
+                                    </i:BehaviorCollectionTemplate>
+                                </Setter>
+                            </Style>
+                        </ListBox.Styles>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate DataType="m:INodeTemplate">
+                                <TextBlock Text="{Binding Title}" />
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+                </StackPanel>
             </ControlTemplate>
         </Setter>
 
