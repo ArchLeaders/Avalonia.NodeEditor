@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "Avalonia.NodeEditor.Demo.Browser.dll",
   "resources": {
-    "hash": "sha256-qI4Xevg6qICODv/ejyaoPMDzrYDmCHeUsxIEMbs1uf0=",
+    "hash": "sha256-a/rXkPBl5rc4w9aiPqEu8LWWfydNWzM4kWhXe/G35J8=",
     "jsModuleNative": {
       "dotnet.native.js": "sha256-BdKmlgGdhc2tffUSqHW4nTVyhLuCaycYFwW84wDMxWc="
     },
@@ -29,11 +29,11 @@
       "Avalonia.Markup.wasm": "sha256-YlmH8VerB0SEZHjeGflkS+2nX5L8Or5DoYSL5CHKxAQ=",
       "Avalonia.Markup.Xaml.wasm": "sha256-A3xwZP5j//+jzJw5+IN8oKuDpnYf+GPgCwpfg640ONE=",
       "Avalonia.Metal.wasm": "sha256-DxF9frlPfKNNAMsQTGJ5zODdHjGVRAgN7TxgIMqZoBU=",
-      "Avalonia.NodeEditor.Core.wasm": "sha256-KOKVt8HUJURNjKLk4ojx46QYo80yXngmv+w4IKQvWz8=",
-      "Avalonia.NodeEditor.Core.Mvvm.wasm": "sha256-dtwiPO9O/MDXFWTe7SiEqt+X99OGek4ePVpbnI/YT3Q=",
-      "Avalonia.NodeEditor.Demo.Browser.wasm": "sha256-EhhbqXPBafC6TcH0z8u4s6IGGmHHAmbPtjXKvvTT4n0=",
-      "Avalonia.NodeEditor.Demo.wasm": "sha256-FyHg7prcZOFmkUgBgfOmMS+ENGf+y8XzwfrHOV8qU68=",
-      "Avalonia.NodeEditor.wasm": "sha256-GWAtYIiPTg2UFGfDUtUG/rE94gH529iAaWqxWVyLCzc=",
+      "Avalonia.NodeEditor.Core.wasm": "sha256-QaKQ7Tbd3T8K3X31+lL1SDi5cJSV+y2IC536j7+PFck=",
+      "Avalonia.NodeEditor.Core.Mvvm.wasm": "sha256-vOo9yKfknDv7cUOBz75iXo9pzv/7RGre7PCR4DeepmM=",
+      "Avalonia.NodeEditor.Demo.Browser.wasm": "sha256-trIlqqcm6Pfz5STWf6SQVZ1F6yfHrGNvW8ua4F2qjho=",
+      "Avalonia.NodeEditor.Demo.wasm": "sha256-e3qDoyu1JzLO5C5h3U3QQIGyiy2/YAmoXs6TvLCBqYo=",
+      "Avalonia.NodeEditor.wasm": "sha256-4vGvpcLLPjhLoudHJ6iuzg4CfZXOhOZjm+uA0tVc90M=",
       "Avalonia.OpenGL.wasm": "sha256-X5cEANoKbU9aUZDHUqlC8AYQbs7D09OQlzyAiqxW45U=",
       "Avalonia.Skia.wasm": "sha256-wJMptxaB409dd18F6JDKtYUEmVNxThxQDRuEHCYpXlQ=",
       "Avalonia.Themes.Fluent.wasm": "sha256-u732J5ADN8o3XmVQWIJKtLB+Bkc07VJEbRXgxHF3NMA=",
